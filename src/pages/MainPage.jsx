@@ -1,102 +1,37 @@
-import useInput from "../hooks/useInput";
-import styled from "styled-components";
 import * as St from "../styles/Styles";
+import Header from "../components/common/Header";
+import Card from "../components/mainPage/Card";
 
 export default function MainPage() {
-  const [titleInput, titleHandleChange] = useInput("");
-  const [youtubeidInput, youtubeidHandleChange] = useInput("");
-  const [contentInput, contentHandleChange] = useInput("");
+  // useEffect : token이 있다면 프로필, 없다면 로그인 버튼
+  const data = [
+    { id: 1, title: "Video provides a powerful" },
+    { id: 2, title: "Video provides a powerful" },
+    { id: 3, title: "Video provides a powerful" },
+    { id: 4, title: "Video provides a powerful" },
+    { id: 5, title: "Video provides a powerful" },
+    { id: 6, title: "Video provides a powerful" },
+  ];
 
   return (
-    <>
-      <SmallModalWrap>
-        <InputTitle>
-          <div>
-            제목
-            <br />
-            <input
-              type="text"
-              value={titleInput}
-              onChange={titleHandleChange}
-            />
-          </div>
-        </InputTitle>
-        <div>
-          <InputTitle>
-            <div>
-              유튜브 주소
-              <br />
-              https://youtube.be/
-              <input
-                type="text"
-                value={youtubeidInput}
-                onChange={youtubeidHandleChange}
-              />
-            </div>
-          </InputTitle>
-        </div>
-        <InputTitle>
-          <div>
-            추천사유
-            <br />
-            <input
-              type="text"
-              value={contentInput}
-              onChange={contentHandleChange}
-              placeholder="왜 이 노래를 추천하시나요?"
-            />
-          </div>
-        </InputTitle>
-        <NavyButton>등록</NavyButton>
-      </SmallModalWrap>
-    </>
+    <St.Container>
+      <Header>
+        <h1>로고</h1>
+        <button>프로필</button>
+      </Header>
+
+      <St.CategoryGroup>
+        <button>최신순</button>
+        <button>조회순</button>
+        <button>댓글순</button>
+      </St.CategoryGroup>
+
+      <St.CardGroup>
+        {data.map((value) => (
+          <Card key={value.id} title={value.title} />
+        ))}
+        <Card />
+      </St.CardGroup>
+    </St.Container>
   );
 }
-const NavyButton = styled.button`
-  color: white;
-  background-color: #2d3648;
-  border-radius: 5px;
-  border: none;
-  width: 70px;
-  height: 24px;
-  font-size: 11px;
-  font-weight: bold;
-  margin-top: 10px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #3498db;
-  }
-`;
-
-const SmallModalWrap = styled.div`
-  width: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 6;
-  background-color: white;
-  border: thin solid black;
-  border-radius: 8px;
-`;
-
-const InputTitle = styled.div`
-  font-size: 12px;
-  font-weight: bold;
-  margin-top: 10px;
-  border: thin solid red;
-  width: 100%;
-`;
-// const RecommendInputField = styled.input`
-//   text-align: left;
-// `;
-
-// const TitleInputField = styled.input`
-//   text-align: left;
-// `;
