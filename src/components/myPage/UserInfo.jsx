@@ -8,7 +8,6 @@ export default function UserInfo() {
   return (
     <St.Container>
       <Header>
-        <h1>Logo</h1>
         <button>프로필</button>
       </Header>
 

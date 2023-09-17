@@ -1,5 +1,11 @@
 import * as St from "../../styles/Styles";
+import Logo from "./Logo";
 
 export default function Header({ children }) {
-  return <St.Header>{children}</St.Header>;
+  return (
+    <St.Header>
+      <Logo />
+      {children}
+    </St.Header>
+  );
 }
