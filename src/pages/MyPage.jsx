@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import Header from "../components/common/Header";
-import UserPost from "../components/myPage/UserPost";
 import * as St from "../styles/Styles";
 
 export default function MyPage() {
@@ -9,7 +8,6 @@ export default function MyPage() {
   return (
     <St.Container>
       <Header>
-        <h1>Logo</h1>
         <button>프로필</button>
       </Header>
 

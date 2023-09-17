@@ -1,6 +1,5 @@
 import { styled, css } from "styled-components";
 
-
 export const Container = styled.div`
   max-width: 1200px;
   min-width: 800px;
@@ -13,7 +12,7 @@ export const Header = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #eee;
+  background-color: #2d3648;
   box-sizing: border-box;
   padding: 10px 20px;
 `;
@@ -54,9 +53,10 @@ export const Button = styled.button`
 
 export const CategoryGroup = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 10px;
-  margin: 10px 0;
+  margin: 20px 0;
 `;
 
 export const Card = styled.div`
@@ -146,4 +146,79 @@ export const UserPostContainer = styled.div`
 export const UserPostForm = styled.div`
   padding: 10px;
   border-bottom: 1px solid black;
+`;
+
+export const Col = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Logo = styled.div`
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: 4px;
+  color: #eee;
+`;
+
+export const Modal = styled.div`
+  position: absolute;
+  top: -30%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  width: 600px;
+  border: thin solid black;
+  border-radius: 10px;
+  background-color: white;
+  overflow: hidden;
+`;
+
+export const Background = styled.div`
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  top: 0;
+  left: 0;
+`;
+
+export const ButtonGroup = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  height: 30px;
+  padding: 10px;
+  gap: 10px;
+`;
+
+export const Video = styled.div`
+  border: 1px solid black;
+  width: 500px;
+  height: 300px;
+  margin: 20px auto;
+`;
+
+export const Title = styled.div`
+  border: thin solid black;
+  text-align: center;
+  margin: 0 30px;
+`;
+
+export const PostInfo = styled.div`
+  display: flex;
+  gap: 10px;
+  margin: 30px;
+`;
+
+export const Content = styled.div`
+  margin: 30px;
+`;
+
+export const Comment = styled.div`
+  display: flex;
+  margin: 30px;
+
+  textarea {
+    width: 100%;
+    resize: none;
+  }
 `;
