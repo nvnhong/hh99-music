@@ -12,7 +12,7 @@ export const Header = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #2d3648;
+  background-color: #eee;
   box-sizing: border-box;
   padding: 10px 20px;
 `;
@@ -53,10 +53,9 @@ export const Button = styled.button`
 
 export const CategoryGroup = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
   gap: 10px;
-  margin: 20px 0;
+  margin: 10px 0;
 `;
 
 export const Card = styled.div`
@@ -126,7 +125,21 @@ export const UserInfoContainer = styled.div`
 `;
 
 export const UserInfoForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
   padding: 10px;
+  height: 100%;
+`;
+
+export const UserInfoTitle = styled.div`
+  width: 130px;
+  user-select: none;
+`;
+
+export const UserInfoInput = styled.input`
+  width: 300px;
 `;
 
 export const Row = styled.div`
