@@ -3,10 +3,11 @@ import useInput from "../../hooks/useInput";
 import * as St from "../../styles/Styles";
 import { CloseIcon } from "../../asset/icon/Icon";
 
-export default function Modal({ handleClick }) {
+export default function Modal({ type, handleClick }) {
   const [titleInput, titleHandleChange] = useInput("");
   const [youtubeidInput, youtubeidHandleChange] = useInput("");
   const [contentInput, contentHandleChange] = useInput("");
+
   return (
     <>
       <St.Background onClick={handleClick} />
@@ -45,7 +46,8 @@ export default function Modal({ handleClick }) {
         </Col>
 
         <ButtonContainer>
-          <Button>등록</Button>
+          {type === "upload" && <Button>등록</Button>}
+          {type === "update" && <Button>수정</Button>}
         </ButtonContainer>
       </Container>
     </>
