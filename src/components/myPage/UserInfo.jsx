@@ -9,10 +9,7 @@ export default function UserInfo() {
 
   return (
     <St.Container>
-      <Header>
-        <h1>Logo</h1>
-        <button>프로필</button>
-      </Header>
+      <Header />
 
       <St.UserInfoContainer>
         <St.List onClick={() => navigate("/mypage")}>

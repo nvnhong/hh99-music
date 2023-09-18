@@ -53,9 +53,10 @@ export const Button = styled.button`
 
 export const CategoryGroup = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 10px;
-  margin: 10px 0;
+  margin: 20px 0;
 `;
 
 export const Card = styled.div`
@@ -157,6 +158,9 @@ export const UserPostContainer = styled.div`
 `;
 
 export const UserPostForm = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 10px;
   border-bottom: 1px solid black;
 `;
@@ -171,7 +175,6 @@ export const Logo = styled.div`
   font-weight: 600;
   font-size: 20px;
   letter-spacing: 4px;
-  color: #eee;
 `;
 
 export const Modal = styled.div`
