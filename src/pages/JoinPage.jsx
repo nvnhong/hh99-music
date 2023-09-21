@@ -11,32 +11,36 @@ export default function JoinPage() {
   const [pwInput, pwHandleChange] = useInput("");
   const [confirmPwInput, confirmPwHandleChange] = useInput("");
   const [emailInput, emailHandleChange] = useInput("");
-  const [nicknameInput, nicknameHandleChange] = useInput("");
   const [bioInput, bioHandleChange] = useInput("");
 
   const handleLogoClick = () => {
     navigate("/");
   };
-  // const onSubmitHandler = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios.post("http://localhost:4000/sign-up", {
-  //       username: idInput,
-  //       password: pwInput,
-  //       email: emailInput,
-  //       nickname: nicknameInput,
-  //       intro: bioInput,
-  //     });
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://13.209.7.61/api/users/signup",
+        {
+          username: idInput,
+          password: pwInput,
+          email: emailInput,
+          intro: bioInput,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
 
-  //     console.log("새로운 회원가입이 발생하였습니다 ->", response);
-  //     if (response.status === 201) {
-  //       navigate("/");
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     alert(error.response.data.message);
-  //   }
-  // };
+      console.log("새로운 회원가입이 발생하였습니다 ->", response);
+      if (response.status === 200) {
+        navigate("/");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -80,16 +84,6 @@ export default function JoinPage() {
         </InputTitle>
         <InputTitle>
           <St.Col>
-            닉네임
-            <InputSize
-              type="text"
-              value={nicknameInput}
-              onChange={nicknameHandleChange}
-            />
-          </St.Col>
-        </InputTitle>
-        <InputTitle>
-          <St.Col>
             한 줄 자기소개
             <InputSize
               type="text"
@@ -100,7 +94,7 @@ export default function JoinPage() {
         </InputTitle>
 
         <div>
-          <NavyButton>회원가입</NavyButton>
+          <NavyButton onClick={onSubmitHandler}>회원가입</NavyButton>
         </div>
       </CenteredContainer>
     </>
