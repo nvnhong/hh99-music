@@ -2,31 +2,22 @@ import * as St from "../styles/Styles";
 import Header from "../components/common/Header";
 import Card from "../components/mainPage/Card";
 import Modal from "../components/common/Modal";
-import PostViewModal from "../components/mainPage/PostViewModal";
+import Category from "../components/mainPage/Category";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal, closeModal } from "../redux/slice/modalSlice";
-import Category from "../components/mainPage/Category";
+import { getPost } from "../api/api";
+import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 
 export default function MainPage() {
-  const data = [
-    { id: 1, title: "Video provides a powerful" },
-    { id: 2, title: "Video provides a powerful" },
-    { id: 3, title: "Video provides a powerful" },
-    { id: 4, title: "Video provides a powerful" },
-    { id: 5, title: "Video provides a powerful" },
-    { id: 6, title: "Video provides a powerful" },
-  ];
-
   const modal = useSelector((state) => state.modal);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isLoading, error, data } = useQuery("post", getPost);
 
-  const handleOpenModal = (modalName) => {
-    dispatch(openModal(modalName));
-  };
-
-  const handleCloseModal = (modalName) => {
-    dispatch(closeModal(modalName));
-  };
+  if (isLoading) {
+    return <div>로딩중...</div>;
+  }
 
   return (
     <St.Container>
@@ -34,7 +25,9 @@ export default function MainPage() {
 
       <St.CategoryGroup>
         <Category />
-        <button onClick={() => handleOpenModal("uploadModal")}>글등록</button>
+        <button onClick={() => dispatch(openModal("uploadModal"))}>
+          글등록
+        </button>
       </St.CategoryGroup>
 
       <St.CardGroup>
@@ -42,19 +35,13 @@ export default function MainPage() {
           <Card
             key={value.id}
             title={value.title}
-            handleClick={() => handleOpenModal("postViewModal")}
+            handleClick={() => navigate("/post", { state: value.id })}
           />
         ))}
       </St.CardGroup>
 
       {modal.uploadModal && (
-        <Modal
-          type="upload"
-          handleClick={() => handleCloseModal("uploadModal")}
-        />
-      )}
-      {modal.postViewModal && (
-        <PostViewModal handleClick={() => handleCloseModal("postViewModal")} />
+        <Modal handleClick={() => dispatch(closeModal("uploadModal"))} />
       )}
     </St.Container>
   );
