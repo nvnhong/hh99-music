@@ -3,9 +3,81 @@ import * as St from "../../styles/Styles";
 import Header from "../common/Header";
 import { BiArrowBack } from "react-icons/bi";
 import styled from "styled-components";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { setUserId } from "../../redux/slice/userSlice";
 
 export default function UserInfo() {
+  const [email, setEmail] = useState("");
+  const [bio, setBio] = useState("");
+  const { userId } = useSelector((state) => state.user);
+
+  const emailHandleChange = (e) => {
+    setEmail(e.target.value);
+  };
+  const bioHandleChange = (e) => {
+    setBio(e.target.value);
+  };
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    async function fetchUserInfo() {
+      try {
+        const response = await axios.get(
+          "http://13.209.7.61/api/users/profile?username=asdasdasd",
+          {
+            headers: {
+              Authorization: localStorage.getItem("accessToken"),
+            },
+            withCredentials: true,
+          }
+        );
+
+        const userInfo = response.data;
+
+        setEmail(userInfo.email);
+        setBio(userInfo.intro);
+      } catch (error) {
+        console.error("회원 정보 가져오기 오류:", error);
+      }
+    }
+
+    fetchUserInfo();
+  }, []);
+
+  const onSaveHandler = async () => {
+    try {
+      const response = await axios.put(
+        "http://13.209.7.61/api/users/profile",
+        {
+          username: "asdasdasd",
+          password: pw,
+          email: email,
+          intro: bio,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("accessToken"),
+          },
+          withCredentials: true,
+        }
+      );
+
+      if (response.status === 200) {
+        alert("회원 정보가 성공적으로 업데이트되었습니다.");
+        navigate("/mypage");
+      }
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data.message);
+      } else {
+        alert("회원 정보 업데이트 중 오류가 발생했습니다.");
+      }
+    }
+  };
 
   return (
     <St.Container>
@@ -17,26 +89,18 @@ export default function UserInfo() {
         </St.List>
         <St.UserInfoForm>
           <St.Row>
-            <St.UserInfoTitle>비밀번호</St.UserInfoTitle>
-            <St.UserInfoInput />
-          </St.Row>
-          <St.Row>
-            <St.UserInfoTitle>비밀번호 재확인</St.UserInfoTitle>
-            <St.UserInfoInput />
-          </St.Row>
-          <St.Row>
-            <St.UserInfoTitle>닉네임</St.UserInfoTitle>
-            <St.UserInfoInput />
-          </St.Row>
-          <St.Row>
             <St.UserInfoTitle>한 줄 자기소개</St.UserInfoTitle>
-            <St.UserInfoInput />
+            <St.UserInfoInput value={bio} onChange={bioHandleChange} />
           </St.Row>
           <St.Row>
             <St.UserInfoTitle>이메일</St.UserInfoTitle>
-            <St.UserInfoInput />
+            <St.UserInfoInput
+              type="email"
+              value={email}
+              onChange={emailHandleChange}
+            />
           </St.Row>
-          <NavyButton>저장</NavyButton>
+          <NavyButton onClick={onSaveHandler}>저장</NavyButton>
         </St.UserInfoForm>
       </St.UserInfoContainer>
     </St.Container>
