@@ -19,6 +19,7 @@ export const Header = styled.header`
 
 export const Button = styled.button`
   border: none;
+  cursor: pointer;
 
   ${({ typebutton }) => {
     switch (typebutton) {
@@ -179,14 +180,13 @@ export const Logo = styled.div`
 
 export const Modal = styled.div`
   position: absolute;
-  top: -30%;
+  top: 0;
   left: 50%;
-  transform: translate(-50%, 50%);
+  transform: translate(-50%, 0);
   width: 600px;
   border: thin solid black;
   border-radius: 10px;
   background-color: white;
-  overflow: hidden;
 `;
 
 export const Background = styled.div`
@@ -213,20 +213,16 @@ export const Video = styled.div`
   margin: 20px auto;
 `;
 
-export const Title = styled.div`
-  border: thin solid black;
-  text-align: center;
+export const Title = styled.h1`
+  /* text-align: center; */
   margin: 0 30px;
-`;
-
-export const PostInfo = styled.div`
-  display: flex;
-  gap: 10px;
-  margin: 30px;
 `;
 
 export const Content = styled.div`
   margin: 30px;
+  padding: 10px;
+  background-color: #eee;
+  border-radius: 8px;
 `;
 
 export const Comment = styled.div`
