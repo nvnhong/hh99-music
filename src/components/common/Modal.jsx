@@ -2,11 +2,26 @@ import styled from "styled-components";
 import useInput from "../../hooks/useInput";
 import * as St from "../../styles/Styles";
 import { CloseIcon } from "../../asset/icon/Icon";
+import { useSelector } from "react-redux";
+import { useMutation, useQueryClient } from "react-query";
+import { createPost } from "../../api/api";
 
-export default function Modal({ type, handleClick }) {
-  const [titleInput, titleHandleChange] = useInput("");
-  const [youtubeidInput, youtubeidHandleChange] = useInput("");
-  const [contentInput, contentHandleChange] = useInput("");
+export default function Modal({ handleClick }) {
+  const [title, titleHandleChange] = useInput("");
+  const [content, contentHandleChange] = useInput("");
+  const [url, urlHandleChange] = useInput("");
+  const { userId } = useSelector((state) => state.user);
+  const queryClient = useQueryClient();
+
+  const createPostMutation = useMutation(
+    () => createPost({ title, content, url, author: userId }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("post");
+        handleClick();
+      },
+    }
+  );
 
   return (
     <>
@@ -20,34 +35,29 @@ export default function Modal({ type, handleClick }) {
 
         <Col>
           <span>제목</span>
-          <input type="text" value={titleInput} onChange={titleHandleChange} />
+          <input type="text" onChange={titleHandleChange} />
         </Col>
 
         <Col>
           <span>유튜브 주소</span>
-          <div>
-            https://youtube.be/
-            <input
-              type="text"
-              value={youtubeidInput}
-              onChange={youtubeidHandleChange}
-            />
-          </div>
+          <input
+            type="text"
+            onChange={urlHandleChange}
+            placeholder="공유하고 싶은 유튜브 주소를 적어주세요."
+          />
         </Col>
 
         <Col>
           <span>추천사유</span>
           <input
             type="text"
-            value={contentInput}
             onChange={contentHandleChange}
             placeholder="왜 이 노래를 추천하시나요?"
           />
         </Col>
 
         <ButtonContainer>
-          {type === "upload" && <Button>등록</Button>}
-          {type === "update" && <Button>수정</Button>}
+          <Button onClick={() => createPostMutation.mutate()}>등록</Button>
         </ButtonContainer>
       </Container>
     </>

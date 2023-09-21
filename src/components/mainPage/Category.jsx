@@ -4,7 +4,6 @@ export default function Category() {
   return (
     <Container>
       <Button>최신순</Button>
-      <Button>조회순</Button>
       <Button>댓글순</Button>
       <Button>좋아요순</Button>
     </Container>
