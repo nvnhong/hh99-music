@@ -2,17 +2,17 @@ import styled from "styled-components";
 import * as St from "../../styles/Styles";
 import Logo from "./Logo";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Header() {
-  const token = localStorage.getItem("token");
-  // const token = "user";
+  const { userId } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
   return (
     <St.Header>
       <Logo />
-      {token ? (
-        <UserTitle onClick={() => navigate("/mypage")}>사용자님</UserTitle>
+      {userId ? (
+        <UserTitle onClick={() => navigate("/mypage")}>{userId}님</UserTitle>
       ) : (
         <Button onClick={() => navigate("/login")}>로그인</Button>
       )}
