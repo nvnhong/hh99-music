@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setUserId } from "../redux/slice/userSlice";
+import { getUserName } from "../api/api";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ export default function LoginPage() {
       2.1 Header에 ㅇㅇㅇ님을 표현한다는 사용 O
       2.2 백엔드와 api 통신을 할 때 전역 상태 값으로 관리하는 사용자 정보를 불러와서 사용할 수 있습니다.
   */
+
   const onLoginHandler = async (e) => {
     e.preventDefault();
     try {
@@ -45,21 +47,28 @@ export default function LoginPage() {
         }
       );
       if (response.status === 200) {
-        console.log(response);
         const accessToken = response.headers["authorization"];
         localStorage.setItem("accessToken", accessToken);
-        dispatch(setUserId(idInput));
+        const userId = await getUserName(accessToken);
+        dispatch(setUserId(userId));
         navigate("/");
       }
     } catch (error) {
       console.log(error);
-
       if (error.response) {
         alert(error.response.data.message);
       } else {
         alert("로그인 중에 오류가 발생했습니다.");
       }
     }
+  };
+
+  const kakaoLoginHandler = () => {
+    const REST_API_KEY = import.meta.env.VITE_REACT_APP_KAKAO_CLIENT_ID;
+    const REDIRECT_URI = import.meta.env.VITE_REACT_APP_KAKAO_REDIRECT_URI;
+    const link = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
+    window.location.href = link;
   };
 
   return (
@@ -84,6 +93,11 @@ export default function LoginPage() {
         </InputTitle>
         <div>
           <NavyButton onClick={onLoginHandler}>로그인</NavyButton>
+        </div>
+        <div>
+          <NavyButton onClick={() => kakaoLoginHandler()}>
+            카카오 로그인
+          </NavyButton>
         </div>
         <ToJoin onClick={handleJoinClick}>
           항해뮤직의 회원이 아니신가요?

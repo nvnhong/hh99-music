@@ -1,5 +1,34 @@
 import { axiosInstance } from "./axiosInstance";
 
+// 소셜로그인
+export const kakaoLogin = async (code) => {
+  const data = await axiosInstance.get(
+    `users/kakao/callback?code=${code}`,
+    {
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+    },
+    {
+      grant_type: "authorization_code",
+      client_id: import.meta.env.VITE_REACT_APP_KAKAO_CLIENT_ID,
+      redirect_uri: import.meta.env.VITE_REACT_APP_KAKAO_REDIRECT_URI,
+      code,
+    }
+  );
+
+  return data;
+};
+
+// username 조회
+export const getUserName = async (accessToken) => {
+  const { data } = await axiosInstance.get(`users/user-info`, {
+    headers: { Authorization: accessToken },
+  });
+
+  return data.username;
+};
+
 // 게시글 조회
 export const getPost = async () => {
   const { data } = await axiosInstance.get("posts");
@@ -16,6 +45,20 @@ export const getOnePost = async (id) => {
 export const createPost = async (post) => {
   const { data } = await axiosInstance.post("posts", post);
   return data;
+};
+
+// 게시글 길이 조회
+export const totalPostLength = async (post) => {
+  const { data } = await axiosInstance.post("posts", post);
+  return data.length;
+};
+
+// 게시글 페이지네이션
+export const pagenationPost = async (currentPage, postsPerPage) => {
+  const { data } = await axiosInstance.get(
+    `post?page=${currentPage}&size=${postsPerPage}`
+  );
+  return data.content;
 };
 
 // 게시글 수정

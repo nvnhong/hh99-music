@@ -7,6 +7,7 @@ import UserInfo from "../components/myPage/UserInfo";
 import UserPost from "../components/myPage/UserPost";
 import PostPage from "../pages/PostPage";
 import UpdatePage from "../pages/UpdatePage";
+import RedirectionPage from "../pages/RedirectionPage";
 
 export default function Router() {
   return (
@@ -20,6 +21,7 @@ export default function Router() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/userinfo" element={<UserInfo />} />
         <Route path="/mypage/userpost" element={<UserPost />} />
+        <Route path="/api/user/kakao/callback" element={<RedirectionPage />} />
       </Routes>
     </BrowserRouter>
   );

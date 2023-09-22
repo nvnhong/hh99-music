@@ -8,16 +8,35 @@ import { openModal, closeModal } from "../redux/slice/modalSlice";
 import { getPost } from "../api/api";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import Pagination from "../components/mainPage/Pagination";
+import { axiosInstance } from "../api/axiosInstance";
 
 export default function MainPage() {
   const modal = useSelector((state) => state.modal);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoading, error, data } = useQuery("post", getPost);
+
+  // >> [페이지네이션] >>
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
+  const [postsPerPage, setPostPerPage] = useState(6); // 페이지별 나타낼 게시글 갯수
+
+  const { isLoading, error, data } = useQuery(
+    ["post", currentPage],
+    async () => {
+      const { data } = await axiosInstance.get(
+        `post?page=${currentPage - 1}&size=${postsPerPage}`
+      );
+
+      const post = await getPost();
+      return { data, post };
+    }
+  );
 
   if (isLoading) {
     return <div>로딩중...</div>;
   }
+  // == [페이지네이션] ==
 
   return (
     <St.Container>
@@ -31,7 +50,7 @@ export default function MainPage() {
       </St.CategoryGroup>
 
       <St.CardGroup>
-        {data.map((value) => (
+        {data.data.content.map((value) => (
           <Card
             key={value.id}
             title={value.title}
@@ -39,6 +58,12 @@ export default function MainPage() {
           />
         ))}
       </St.CardGroup>
+
+      <Pagination
+        postsPerPage={postsPerPage}
+        totalPosts={data.post.length}
+        paginate={setCurrentPage}
+      />
 
       {modal.uploadModal && (
         <Modal handleClick={() => dispatch(closeModal("uploadModal"))} />
