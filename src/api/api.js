@@ -1,5 +1,13 @@
 import { axiosInstance } from "./axiosInstance";
 
+// 회원 탈퇴
+export const deleteUser = async (password) => {
+  const data = await axiosInstance.delete(`users/delete?password=${password}`);
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+  return data;
+};
+
 // 소셜로그인
 export const kakaoLogin = async (code) => {
   const data = await axiosInstance.get(
