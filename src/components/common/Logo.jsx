@@ -6,7 +6,7 @@ export default function Logo() {
   return (
     <div
       className="font-양진체 text-2xl font-bold select-none text-red-400"
-      onClick={() => navigate("/")}
+      onClick={() => navigate("/main")}
     >
       항해 뮤직 🎧
     </div>
