@@ -41,6 +41,15 @@ export const getOnePost = async (id) => {
   return data.data;
 };
 
+// 게시글 조회
+export const getMyPost = async (username) => {
+  const { data } = await axiosInstance.get("posts");
+
+  const myPost = data.data.filter((value) => value.author === username);
+
+  return myPost;
+};
+
 // 게시글 생성
 export const createPost = async (post) => {
   const { data } = await axiosInstance.post("posts", post);

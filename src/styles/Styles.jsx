@@ -164,6 +164,7 @@ export const UserPostForm = styled.div`
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid black;
+  cursor: pointer;
 `;
 
 export const Col = styled.div`
