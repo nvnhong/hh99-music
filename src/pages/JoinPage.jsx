@@ -14,7 +14,7 @@ export default function JoinPage() {
   const [bioInput, bioHandleChange] = useInput("");
 
   const handleLogoClick = () => {
-    navigate("/");
+    navigate("/main");
   };
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -35,7 +35,7 @@ export default function JoinPage() {
 
       console.log("새로운 회원가입이 발생하였습니다 ->", response);
       if (response.status === 200) {
-        navigate("/");
+        navigate("/main");
       }
     } catch (error) {
       console.error(error);

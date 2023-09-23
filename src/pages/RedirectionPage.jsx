@@ -24,7 +24,7 @@ export default function RedirectionPage() {
         // user 정보를 전역상태에 저장
         dispatch(setUserId(userName));
         // 메인 페이지로 이동
-        navigate("/");
+        navigate("/main");
       } catch (error) {
         console.error(error);
       }

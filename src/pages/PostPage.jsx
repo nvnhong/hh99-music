@@ -35,7 +35,7 @@ export default function PostPage() {
   const deletePostMutation = useMutation(() => deletePost(postId), {
     onSuccess: () => {
       queryClient.invalidateQueries("post");
-      navigate("/");
+      navigate("/main");
     },
   });
 

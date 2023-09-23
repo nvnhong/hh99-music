@@ -15,7 +15,7 @@ export default function LoginPage() {
   const [pwInput, pwHandleChange] = useInput("");
 
   const handleLogoClick = () => {
-    navigate("/");
+    navigate("/main");
   };
   const handleJoinClick = () => {
     navigate("/join");
@@ -53,7 +53,7 @@ export default function LoginPage() {
         localStorage.setItem("refreshToken", refreshToken);
         const userId = await getUserName(accessToken);
         dispatch(setUserId(userId));
-        navigate("/");
+        navigate("/main");
       }
     } catch (error) {
       console.log(error);

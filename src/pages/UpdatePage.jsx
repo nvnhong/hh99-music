@@ -28,7 +28,7 @@ export default function UpdatePage() {
     {
       onSuccess: () => {
         queryClient.invalidateQueries("post");
-        navigate("/");
+        navigate("/main");
       },
     }
   );

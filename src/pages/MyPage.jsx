@@ -16,7 +16,7 @@ export default function MyPage() {
     // 사용자 로그아웃 상태로 설정 (redux 등을 사용하여 전역 상태 관리 중이라면 여기서 상태를 업데이트)
     dispatch(clearUserId());
     // 또는 상태를 초기화하거나 사용자 정보를 삭제할 수 있습니다.
-    navigate("/login");
+    navigate("/");
   };
 
   return (

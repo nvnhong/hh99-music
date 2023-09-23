@@ -13,9 +13,9 @@ export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MainPage />} />
+        <Route path="/main" element={<MainPage />} />
         <Route path="/join" element={<JoinPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<LoginPage />} />
         <Route path="/post" element={<PostPage />} />
         <Route path="/post/update" element={<UpdatePage />} />
         <Route path="/mypage" element={<MyPage />} />
