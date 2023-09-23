@@ -62,6 +62,7 @@ export default function MainPage() {
       <Pagination
         postsPerPage={postsPerPage}
         totalPosts={data.post.length}
+        currentPage={currentPage}
         paginate={setCurrentPage}
       />
 

@@ -1,10 +1,20 @@
 import { useNavigate } from "react-router-dom";
 import Header from "../components/common/Header";
 import * as St from "../styles/Styles";
+import { useDispatch } from "react-redux";
+import { clearUserId } from "../redux/slice/userSlice";
 
 export default function MyPage() {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    // 로컬 스토리지에서 토큰 제거
+    localStorage.removeItem("accessToken");
+    // 사용자 로그아웃 상태로 설정 (redux 등을 사용하여 전역 상태 관리 중이라면 여기서 상태를 업데이트)
+    dispatch(clearUserId());
+    // 또는 상태를 초기화하거나 사용자 정보를 삭제할 수 있습니다.
+    navigate("/login");
+  };
   return (
     <St.Container>
       <Header>
@@ -20,7 +30,7 @@ export default function MyPage() {
           내가 작성한 게시글 목록
         </St.List>
 
-        <St.List onClick={() => navigate("/")}>로그아웃</St.List>
+        <St.List onClick={() => handleLogout()}>로그아웃</St.List>
       </St.ListGroup>
     </St.Container>
   );

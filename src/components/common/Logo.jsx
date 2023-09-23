@@ -3,5 +3,12 @@ import * as St from "../../styles/Styles";
 
 export default function Logo() {
   const navigate = useNavigate();
-  return <St.Logo onClick={() => navigate("/")}>항해뮤직</St.Logo>;
+  return (
+    <div
+      className="font-양진체 text-2xl font-bold select-none text-red-400"
+      onClick={() => navigate("/")}
+    >
+      항해 뮤직 🎧
+    </div>
+  );
 }
