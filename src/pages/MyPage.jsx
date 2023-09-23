@@ -1,10 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import Header from "../components/common/Header";
 import * as St from "../styles/Styles";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { clearUserId } from "../redux/slice/userSlice";
+import { closeModal, openModal } from "../redux/slice/modalSlice";
+import DeleteUserModal from "../components/myPage/DeleteUserModal";
 
 export default function MyPage() {
+  const modal = useSelector((state) => state.modal);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogout = () => {
@@ -15,6 +18,7 @@ export default function MyPage() {
     // 또는 상태를 초기화하거나 사용자 정보를 삭제할 수 있습니다.
     navigate("/login");
   };
+
   return (
     <St.Container>
       <Header>
@@ -31,7 +35,17 @@ export default function MyPage() {
         </St.List>
 
         <St.List onClick={() => handleLogout()}>로그아웃</St.List>
+
+        <St.List onClick={() => dispatch(openModal("deleteUserModal"))}>
+          회원탈퇴
+        </St.List>
       </St.ListGroup>
+
+      {modal.deleteUserModal && (
+        <DeleteUserModal
+          handleClick={() => dispatch(closeModal("deleteUserModal"))}
+        />
+      )}
     </St.Container>
   );
 }

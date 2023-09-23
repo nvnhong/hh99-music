@@ -22,7 +22,6 @@ export default function List({ id, title, handleClick }) {
       </div>
       <ButtonGroup>
         <button onClick={() => navigate("/post/update", { state: id })}>
-          {/* <button onClick={handleTestClick}> */}
           <UpdateIcon />
         </button>
         <button onClick={() => deletePostMutation.mutate()}>
