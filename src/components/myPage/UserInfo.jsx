@@ -88,18 +88,28 @@ export default function UserInfo() {
         </St.List>
         <St.UserInfoForm>
           <St.Row>
-            <St.UserInfoTitle>한 줄 자기소개</St.UserInfoTitle>
-            <St.UserInfoInput value={bio} onChange={bioHandleChange} />
+            <div className="mt-0.5 mr-3">한 줄 자기소개</div>
+            <input
+              className="w-64 px-3 py-0.5 mb-1 rounded-md border border-gray-300 focus:outline-none focus:border-red-500"
+              value={bio}
+              onChange={bioHandleChange}
+            />
           </St.Row>
           <St.Row>
-            <St.UserInfoTitle>이메일</St.UserInfoTitle>
-            <St.UserInfoInput
+            <div className="mt-0.5 mr-3 ml-9">이메일</div>
+            <input
+              className="w-64 px-3 py-0.5 mt-1 mb-1 ml-3 rounded-md border border-gray-300 focus:outline-none focus:border-red-500"
               type="email"
               value={email}
               onChange={emailHandleChange}
             />
           </St.Row>
-          <NavyButton onClick={onSaveHandler}>저장</NavyButton>
+          <button
+            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 select-none"
+            onClick={onSaveHandler}
+          >
+            수정
+          </button>
         </St.UserInfoForm>
       </St.UserInfoContainer>
     </St.Container>

@@ -48,7 +48,9 @@ export default function LoginPage() {
       );
       if (response.status === 200) {
         const accessToken = response.headers["authorization"];
+        const refreshToken = response.headers["authorization_refresh"];
         localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
         const userId = await getUserName(accessToken);
         dispatch(setUserId(userId));
         navigate("/");
@@ -74,30 +76,50 @@ export default function LoginPage() {
   return (
     <>
       <CenteredContainer>
-        <LogoSize onClick={handleLogoClick}>항해 뮤직</LogoSize>
+        <div
+          className="font-양진체 text-2xl mb-3 font-bold select-none text-red-400"
+          onClick={handleLogoClick}
+        >
+          항해 뮤직 🎧
+        </div>
         <InputTitle>
           <St.Col>
             아이디
-            <InputSize type="text" value={idInput} onChange={idHandleChange} />
+            <input
+              className="w-64 px-4 py-1 rounded-md border border-gray-300 focus:outline-none focus:border-red-500"
+              type="text"
+              value={idInput}
+              onChange={idHandleChange}
+            />
           </St.Col>
         </InputTitle>
         <InputTitle>
           <St.Col>
             비밀번호
-            <InputSize
+            <input
               type="password"
               value={pwInput}
               onChange={pwHandleChange}
+              className="w-64 px-4 py-1 mt-2 rounded-md border border-gray-300 focus:outline-none focus:border-red-500"
             />
           </St.Col>
         </InputTitle>
         <div>
-          <NavyButton onClick={onLoginHandler}>로그인</NavyButton>
+          <button
+            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 mt-2 select-none"
+            onClick={onLoginHandler}
+          >
+            로그인
+          </button>
         </div>
         <div>
-          <NavyButton onClick={() => kakaoLoginHandler()}>
-            카카오 로그인
-          </NavyButton>
+          <button className="select-none" onClick={() => kakaoLoginHandler()}>
+            <img
+              src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
+              width="180"
+              alt="카카오 로그인 버튼"
+            />
+          </button>
         </div>
         <ToJoin onClick={handleJoinClick}>
           항해뮤직의 회원이 아니신가요?

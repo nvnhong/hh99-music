@@ -9,14 +9,19 @@ export default function Header() {
   const navigate = useNavigate();
 
   return (
-    <St.Header>
+    <header className="bg-gray-100 w-full h-14 flex justify-between items-center box-border px-4">
       <Logo />
       {userId ? (
         <UserTitle onClick={() => navigate("/mypage")}>{userId}님</UserTitle>
       ) : (
-        <Button onClick={() => navigate("/login")}>로그인</Button>
+        <button
+          className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 mt-2 select-none"
+          onClick={() => navigate("/login")}
+        >
+          {userId ? `${userId}님` : "로그인"}
+        </button>
       )}
-    </St.Header>
+    </header>
   );
 }
 
@@ -40,4 +45,15 @@ const Button = styled.button`
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
+`;
+
+const BeforeHeader = styled.header`
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #eee;
+  box-sizing: border-box;
+  padding: 10px 20px;
 `;

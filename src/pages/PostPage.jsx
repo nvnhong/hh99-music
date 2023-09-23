@@ -79,10 +79,16 @@ export default function PostPage() {
 
         <St.Comment>
           <textarea
+            className="w-64 px-4 py-1 mt-2 rounded-md border border-gray-300 focus:outline-none focus:border-red-500"
             value={content}
             onChange={(e) => setContent(e.target.value)}
           />
-          <button onClick={() => commentCreateMutation.mutate()}>등록</button>
+          <button
+            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg font-medium rounded-lg text-sm px-5 py-2 mr-2 mb-2 mt-4 ml-2 select-none flex items-center"
+            onClick={() => commentCreateMutation.mutate()}
+          >
+            등록
+          </button>
         </St.Comment>
 
         <CommentContainer>

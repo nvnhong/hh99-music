@@ -45,17 +45,28 @@ export default function JoinPage() {
   return (
     <>
       <CenteredContainer>
-        <LogoSize onClick={handleLogoClick}>항해 뮤직</LogoSize>
+        <div
+          className="font-양진체 text-2xl mb-3 font-bold select-none text-red-400"
+          onClick={handleLogoClick}
+        >
+          항해 뮤직 🎧
+        </div>
         <InputTitle>
           <St.Col>
             아이디
-            <InputSize type="text" value={idInput} onChange={idHandleChange} />
+            <input
+              className="w-64 px-4 py-1 rounded-md border border-gray-300 focus:outline-none focus:border-red-500"
+              type="text"
+              value={idInput}
+              onChange={idHandleChange}
+            />
           </St.Col>
         </InputTitle>
         <InputTitle>
           <St.Col>
             비밀번호
-            <InputSize
+            <input
+              className="w-64 px-4 py-1 mt-2 rounded-md border border-gray-300 focus:outline-none focus:border-red-500"
               type="password"
               value={pwInput}
               onChange={pwHandleChange}
@@ -65,7 +76,8 @@ export default function JoinPage() {
         <InputTitle>
           <St.Col>
             비밀번호 재확인
-            <InputSize
+            <input
+              className="w-64 px-4 py-1 mt-2 rounded-md border border-gray-300 focus:outline-none focus:border-red-500"
               type="password"
               value={confirmPwInput}
               onChange={confirmPwHandleChange}
@@ -75,8 +87,8 @@ export default function JoinPage() {
         <InputTitle>
           <St.Col>
             이메일
-            <InputSize
-              type="email"
+            <input
+              className="w-64 px-4 py-1 mt-2 rounded-md border border-gray-300 focus:outline-none focus:border-red-500"
               value={emailInput}
               onChange={emailHandleChange}
             />
@@ -85,8 +97,8 @@ export default function JoinPage() {
         <InputTitle>
           <St.Col>
             한 줄 자기소개
-            <InputSize
-              type="text"
+            <input
+              className="w-64 px-4 py-1 mt-2 rounded-md border border-gray-300 focus:outline-none focus:border-red-500"
               value={bioInput}
               onChange={bioHandleChange}
             />
@@ -94,7 +106,12 @@ export default function JoinPage() {
         </InputTitle>
 
         <div>
-          <NavyButton onClick={onSubmitHandler}>회원가입</NavyButton>
+          <button
+            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 mt-2 select-none"
+            onClick={onSubmitHandler}
+          >
+            회원가입
+          </button>
         </div>
       </CenteredContainer>
     </>
