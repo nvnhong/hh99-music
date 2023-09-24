@@ -41,6 +41,10 @@ export default function UpdatePage() {
     }
   }, [data]);
 
+  if (isLoading) {
+    return <div>로딩중</div>;
+  }
+
   return (
     <St.Container>
       <Header />
@@ -72,7 +76,12 @@ export default function UpdatePage() {
         />
       </Col>
 
-      <button onClick={() => updatePostMutation.mutate()}>수정</button>
+      <button
+        className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-auto my-2 select-none"
+        onClick={() => updatePostMutation.mutate()}
+      >
+        수정
+      </button>
     </St.Container>
   );
 }

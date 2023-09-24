@@ -1,11 +1,10 @@
 import useInput from "../hooks/useInput";
-import styled from "styled-components";
-import * as St from "../styles/Styles";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setUserId } from "../redux/slice/userSlice";
 import { getUserName } from "../api/api";
+import { useState } from "react";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -13,6 +12,8 @@ export default function LoginPage() {
 
   const [idInput, idHandleChange] = useInput("");
   const [pwInput, pwHandleChange] = useInput("");
+
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const handleLogoClick = () => {
     navigate("/main");
@@ -57,10 +58,8 @@ export default function LoginPage() {
       }
     } catch (error) {
       console.log(error);
-      if (error.response) {
-        alert(error.response.data.message);
-      } else {
-        alert("로그인 중에 오류가 발생했습니다.");
+      if (error.response.data === "아이디 또는 비밀번호가 틀렸습니다.") {
+        setErrorMsg("아이디나 비밀번호를 다시 확인바랍니다");
       }
     }
   };
@@ -75,45 +74,48 @@ export default function LoginPage() {
 
   return (
     <>
-      <CenteredContainer>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
         <div
-          className="font-양진체 text-2xl mb-3 font-bold select-none text-red-400"
+          className="font-bold text-2xl mb-3 text-red-400 select-none cursor-pointer"
           onClick={handleLogoClick}
         >
           항해 뮤직 🎧
         </div>
-        <InputTitle>
-          <St.Col>
-            아이디
-            <input
-              className="w-64 px-4 py-1 rounded-md border border-gray-300 focus:outline-none focus:border-red-500"
-              type="text"
-              value={idInput}
-              onChange={idHandleChange}
-            />
-          </St.Col>
-        </InputTitle>
-        <InputTitle>
-          <St.Col>
-            비밀번호
-            <input
-              type="password"
-              value={pwInput}
-              onChange={pwHandleChange}
-              className="w-64 px-4 py-1 mt-2 rounded-md border border-gray-300 focus:outline-none focus:border-red-500"
-            />
-          </St.Col>
-        </InputTitle>
-        <div>
+        <div className="mb-4">
+          <label className="text-m font-bold mb-2">아이디</label>
+          <br />
+          <input
+            className="w-64 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-red-500"
+            type="text"
+            value={idInput}
+            onChange={idHandleChange}
+          />
+        </div>
+        <div className="mb-4">
+          <label className="text-m font-bold mb-2">비밀번호</label>
+          <br />
+          <input
+            type="password"
+            value={pwInput}
+            onChange={pwHandleChange}
+            className="w-64 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-red-500"
+          />
+          {errorMsg && (
+            <div className="text-sm text-red-500 p-2 rounded-md mt-2 text-center select-none">
+              {errorMsg}
+            </div>
+          )}
+        </div>
+        <div className="mb-4">
           <button
-            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 mt-2 select-none"
+            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center select-none"
             onClick={onLoginHandler}
           >
             로그인
           </button>
         </div>
-        <div>
-          <button className="select-none" onClick={() => kakaoLoginHandler()}>
+        <div className="mb-4">
+          <button className="select-none" onClick={kakaoLoginHandler}>
             <img
               src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
               width="180"
@@ -121,66 +123,16 @@ export default function LoginPage() {
             />
           </button>
         </div>
-        <ToJoin onClick={handleJoinClick}>
-          항해뮤직의 회원이 아니신가요?
-          <BoldTextForJoin>회원가입하기</BoldTextForJoin>
-        </ToJoin>
-      </CenteredContainer>
+        <div className="text-sm">
+          항해뮤직의 회원이 아니신가요?{" "}
+          <span
+            className="font-bold text-red-400 cursor-pointer"
+            onClick={handleJoinClick}
+          >
+            회원가입하기
+          </span>
+        </div>
+      </div>
     </>
   );
 }
-
-const CenteredContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 80vh; /* 화면 세로 중앙 정렬 */
-`;
-
-const NavyButton = styled.button`
-  color: white;
-  background-color: #2d3648;
-  border-radius: 5px;
-  border: none;
-  width: 75px;
-  height: 34px;
-  font-size: 14px;
-  font-weight: bold;
-  margin-top: 10px;
-  user-select: none;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #3498db;
-  }
-`;
-const InputTitle = styled.div`
-  font-size: 20px;
-  font-weight: bold;
-  margin-top: 10px;
-  user-select: none;
-`;
-const ToJoin = styled.div`
-  font-size: 14px;
-  margin-top: 10px;
-  user-select: none;
-`;
-const BoldTextForJoin = styled.span`
-  font-weight: bold;
-  margin-left: 3px;
-  user-select: none;
-  cursor: pointer;
-`;
-const InputSize = styled.input`
-  width: 250px;
-  height: 28px;
-  font-size: 18px;
-`;
-const LogoSize = styled.div`
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  user-select: none;
-  cursor: pointer;
-`;
