@@ -76,7 +76,7 @@ export default function LoginPage() {
     <>
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
         <div
-          className="font-bold text-2xl mb-3 text-red-400 select-none cursor-pointer"
+          className="font-양진체 font-bold text-2xl mb-3 text-red-400 select-none cursor-pointer"
           onClick={handleLogoClick}
         >
           항해 뮤직 🎧

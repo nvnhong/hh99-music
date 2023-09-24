@@ -20,91 +20,47 @@ export default function DeleteUserModal({ handleClick }) {
 
   return (
     <>
-      <St.Background onClick={handleClick} />
-      <Container>
-        <Header>
-          <button onClick={handleClick}>
-            {/* padding */}
-            <CloseIcon />
-          </button>
-        </Header>
+      <Background onClick={handleClick} />
+      <div className="fixed inset-0 flex justify-center items-center z-50">
+        <div className="bg-white rounded-lg shadow-lg p-6 w-96 relative">
+          <div className="flex justify-end">
+            <button onClick={handleClick} className="p-3 mb-1">
+              <CloseIcon />
+            </button>
+          </div>
 
-        <Col>
-          {/* text-align : center */}
-          <div>회원탈퇴를 하시겠습니까? 비밀번호를 입력해주세요.</div>
-          {/* padding */}
-          <input
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Col>
+          <div className="text-center mb-3 select-none">
+            회원탈퇴를 하시겠습니까? 비밀번호를 입력해주세요.
+          </div>
 
-        <ButtonContainer>
-          <Button onClick={handleSubmitClick}>등록</Button>
-        </ButtonContainer>
-      </Container>
+          <div className="mb-4">
+            <input
+              type="password"
+              className="w-full h-10 px-3 rounded-md border border-gray-300 focus:outline-none"
+              placeholder="비밀번호"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+
+          <div className="flex justify-center">
+            <button
+              className="w-16 h-8 bg-gradient-to-r from-red-400 via-red-500 to-red-600 text-white rounded-md text-sm font-medium hover:bg-gradient-to-br focus:ring-4 focus:ring-red-300 focus:outline-none select-none"
+              onClick={handleSubmitClick}
+            >
+              탈퇴
+            </button>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
 
-const Container = styled.div`
-  position: absolute;
-  top: -10%;
-  left: 50%;
-  width: 600px;
-  transform: translate(-50%, 50%);
-  background-color: white;
-  border-radius: 10px;
-  padding: 0 10px;
-  padding-bottom: 20px;
-`;
-
-const Header = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  padding-top: 10px;
-
-  button {
-    border: none;
-    height: 30px;
-    background-color: transparent;
-  }
-
-  button:hover {
-    background-color: #eee;
-    border-radius: 4px;
-  }
-`;
-
-const Col = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 20px 30px;
-
-  span {
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-
-  input {
-    background-color: #eee;
-    height: 30px;
-    border: none;
-    border-radius: 4px;
-  }
-`;
-
-const ButtonContainer = styled.div`
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-`;
-
-const Button = styled.button`
-  width: 100px;
-  height: 30px;
-  background-color: #2d3648;
-  border: none;
-  border-radius: 8px;
-  color: white;
+const Background = styled.div`
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  top: 0;
+  left: 0;
 `;

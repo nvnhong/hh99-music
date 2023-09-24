@@ -90,6 +90,8 @@ export const CardGroup = styled.div`
   flex-wrap: wrap;
   column-gap: 148px;
   row-gap: 52px;
+  margin: 0 auto;
+  justify-content: center;
 `;
 
 export const ListGroup = styled.div`

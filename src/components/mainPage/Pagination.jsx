@@ -44,7 +44,7 @@ export default function Pagination({
     ));
 
   return (
-    <div className="flex justify-center items-center mt-6">
+    <div className="flex justify-center items-center mt-10">
       <nav>
         <ul className="flex space-x-2">
           {currentPage > 1 ? (
