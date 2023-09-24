@@ -34,10 +34,10 @@ export default function Pagination({
         key={number}
         onClick={() => paginate(number)}
         className={`cursor-pointer ${
-          currentPage === number ? "bg-blue-500 text-white" : ""
+          currentPage === number ? " text-white" : ""
         }`}
       >
-        <span className="bg-gray-300 px-3 py-2 rounded-md font-bold">
+        <span className="bg-red-300 px-3 py-2 rounded-md font-bold">
           {number}
         </span>
       </li>

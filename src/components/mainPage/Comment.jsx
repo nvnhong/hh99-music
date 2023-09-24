@@ -46,7 +46,7 @@ export default function Comment({
           <Username>{username}</Username>
           <div>{detailDate(createdAt)}</div>
         </UserInfo>
-        <div>
+        <div className="flex gap-2">
           {isUsername && (
             <>
               <button onClick={handleUpdateClick}>
@@ -62,11 +62,17 @@ export default function Comment({
       {/* 삼항연산자 */}
       {isUpdate ? (
         <>
-          <input
+          <textarea
+            className="w-full"
             defaultValue={content}
             onChange={(e) => setUpdateContent(e.target.value)}
           />
-          <button onClick={() => updateCommentMutate.mutate()}>수정</button>
+          <button
+            className="bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-300 focus:outline-none text-white text-sm rounded-lg py-1 px-4 mt-2 md:mt-0 md:ml-2 whitespace-nowrap select-none"
+            onClick={() => updateCommentMutate.mutate()}
+          >
+            수정
+          </button>
         </>
       ) : (
         <div>{content}</div>

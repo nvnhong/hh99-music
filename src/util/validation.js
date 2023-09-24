@@ -34,3 +34,10 @@ export function validateContent(content) {
   }
   return "";
 }
+
+export function validateContents(content) {
+  if (!content) {
+    return "댓글 내용을 입력해주세요.";
+  }
+  return "";
+}

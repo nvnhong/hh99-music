@@ -1,5 +1,8 @@
 export const detailDate = (a) => {
-  const milliSeconds = new Date() - new Date(a);
+  let createDate = new Date(a);
+  createDate.setHours(createDate.getHours() + 9);
+
+  const milliSeconds = new Date() - createDate;
 
   const seconds = milliSeconds / 1000;
   if (seconds < 60) return `방금 전`;
