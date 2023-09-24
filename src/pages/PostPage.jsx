@@ -8,6 +8,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import YoutubeVideo from "../components/postPage/YoutubeVideo";
 
 export default function PostPage() {
   const postId = useLocation().state;
@@ -47,8 +48,10 @@ export default function PostPage() {
       <Header />
       <>
         <div className="bg-gray-200 h-80 w-3/4 mx-auto rounded-lg mt-4">
-          {/* St.Video 스타일 대신 테일윈드 클래스 사용 */}
+          <YoutubeVideo youtubeUrl={data.url} />
         </div>
+
+        <St.Title>{data.title}</St.Title>
 
         <h1 className="text-2xl font-bold text-gray-800 mt-4">{data.title}</h1>
 

@@ -1,5 +1,8 @@
 import useInput from "../hooks/useInput";
 import axios from "axios";
+import { getUserName, loginUser } from "../api/api";
+import { useDispatch } from "react-redux";
+import { setUserId } from "../redux/slice/userSlice";
 import { useState } from "react";
 import {
   validateUsername,
@@ -8,6 +11,9 @@ import {
 } from "../util/validation";
 
 export default function JoinPage() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
   const [idInput, idHandleChange] = useInput("");
   const [pwInput, pwHandleChange] = useInput("");
   const [confirmPwInput, confirmPwHandleChange] = useInput("");
@@ -73,6 +79,10 @@ export default function JoinPage() {
 
       console.log("새로운 회원가입이 발생하였습니다 ->", response);
       if (response.status === 200) {
+        await loginUser(idInput, pwInput);
+        const userId = await getUserName(localStorage.getItem("accessToken"));
+        dispatch(setUserId(userId));
+        navigate("/main");
         // 회원가입 성공 시 처리
       }
     } catch (error) {
