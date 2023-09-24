@@ -32,13 +32,6 @@ export default function PostPage() {
     }
   );
 
-  const deletePostMutation = useMutation(() => deletePost(postId), {
-    onSuccess: () => {
-      queryClient.invalidateQueries("post");
-      navigate("/main");
-    },
-  });
-
   const likeMutation = useMutation(() => likeComment(postId), {
     onSuccess: () => {
       queryClient.invalidateQueries("onePost");
@@ -50,51 +43,50 @@ export default function PostPage() {
   }
 
   return (
-    <St.Container>
+    <div className="container mx-auto">
       <Header />
-
-      {data.author === userId && (
-        <div>
-          <button onClick={() => navigate("/post/update", { state: postId })}>
-            수정
-          </button>
-          <button onClick={() => deletePostMutation.mutate()}>삭제</button>
-        </div>
-      )}
-
       <>
-        <St.Video />
+        <div className="bg-gray-200 h-80 w-3/4 mx-auto rounded-lg mt-4">
+          {/* St.Video 스타일 대신 테일윈드 클래스 사용 */}
+        </div>
 
-        <St.Title>{data.title}</St.Title>
+        <h1 className="text-2xl font-bold text-gray-800 mt-4">{data.title}</h1>
 
-        <PostInfo>
-          <Username>{data.author}</Username>
-          <LikeContainer onClick={() => likeMutation.mutate()}>
-            <LikeIcon />
-            {data.likesCount}
-          </LikeContainer>
-        </PostInfo>
+        <div className="flex justify-between items-center mt-4">
+          <div className="font-semibold text-gray-700">
+            <span className="font-bold mr-2">{data.author}</span>
+            <div
+              className="flex items-center gap-4"
+              onClick={() => likeMutation.mutate()}
+            >
+              <LikeIcon className="w-5 h-5 fill-current text-red-500" />
+              <span>{data.likesCount}</span>
+            </div>
+          </div>
+        </div>
 
-        <St.Content>{data.content}</St.Content>
+        <p className="text-gray-600 mt-4">{data.content}</p>
 
-        <St.Comment>
+        <div className="bg-gray-100 p-4 rounded-md mt-6 flex flex-col md:flex-row items-center">
           <textarea
-            className="w-64 px-4 py-1 mt-2 rounded-md border border-gray-300 focus:outline-none focus:border-red-500"
+            className="w-full md:w-94 px-4 py-1 rounded-md border border-gray-300 focus:outline-none focus:border-red-500"
             value={content}
             onChange={(e) => setContent(e.target.value)}
           />
           <button
-            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg font-medium rounded-lg text-sm px-5 py-2 mr-2 mb-2 mt-4 ml-2 select-none flex items-center"
+            className="bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-300 focus:outline-none text-white text-sm rounded-lg py-1 px-4 mt-2 md:mt-0 md:ml-2 whitespace-nowrap"
             onClick={() => commentCreateMutation.mutate()}
+            style={{ height: "30px" }} // 원하는 높이 값으로 변경
           >
             등록
           </button>
-        </St.Comment>
+        </div>
 
-        <CommentContainer>
-          {data.commentList.length > 0 &&
-            data.commentList.map((value) => {
-              return (
+        <div className="mt-6">
+          <h2 className="text-xl font-semibold text-gray-800">댓글</h2>
+          <div className="mt-4">
+            {data.commentList.length > 0 &&
+              data.commentList.map((value) => (
                 <Comment
                   key={value.id}
                   id={value.id}
@@ -103,30 +95,10 @@ export default function PostPage() {
                   content={value.content}
                   isUsername={value.username === userId}
                 />
-              );
-            })}
-        </CommentContainer>
+              ))}
+          </div>
+        </div>
       </>
-    </St.Container>
+    </div>
   );
 }
-
-const PostInfo = styled.div`
-  display: flex;
-  gap: 20px;
-  margin: 30px;
-`;
-
-const Username = styled.div`
-  font-weight: bold;
-`;
-
-const LikeContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 4px;
-`;
-
-const CommentContainer = styled.div`
-  margin: 0 30px;
-`;
