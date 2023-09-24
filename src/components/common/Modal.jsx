@@ -62,7 +62,7 @@ export default function Modal({ handleClick }) {
         className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
         onClick={handleModalClick}
       >
-        <div className="w-3/5 bg-white rounded-lg p-4">
+        <div className="w-96 bg-white rounded-lg p-4">
           <div className="flex justify-end">
             <button
               onClick={handleClick}

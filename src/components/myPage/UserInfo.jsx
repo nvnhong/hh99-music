@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import * as St from "../../styles/Styles";
 import Header from "../common/Header";
 import { BiArrowBack } from "react-icons/bi";
-import styled from "styled-components";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -115,20 +114,3 @@ export default function UserInfo() {
     </St.Container>
   );
 }
-const NavyButton = styled.button`
-  color: white;
-  background-color: #2d3648;
-  border-radius: 5px;
-  border: none;
-  width: 70px;
-  height: 25px;
-  font-size: 14px;
-  font-weight: bold;
-  margin-top: 10px;
-  user-select: none;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #3498db;
-  }
-`;

@@ -9,11 +9,12 @@ import {
   validatePassword,
   validateEmail,
 } from "../util/validation";
+import { useNavigate } from "react-router-dom";
 
 export default function JoinPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   const [idInput, idHandleChange] = useInput("");
   const [pwInput, pwHandleChange] = useInput("");
   const [confirmPwInput, confirmPwHandleChange] = useInput("");
