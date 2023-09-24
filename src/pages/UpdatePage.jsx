@@ -41,6 +41,10 @@ export default function UpdatePage() {
     }
   }, [data]);
 
+  if (isLoading) {
+    return <div>로딩중</div>;
+  }
+
   return (
     <St.Container>
       <Header />

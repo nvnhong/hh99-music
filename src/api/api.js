@@ -8,6 +8,20 @@ export const deleteUser = async (password) => {
   return data;
 };
 
+// 로그인
+export const loginUser = async (username, password) => {
+  const response = await axiosInstance.post(`users/login`, {
+    username,
+    password,
+  });
+  localStorage.setItem("accessToken", response.headers["authorization"]);
+  localStorage.setItem(
+    "refreshToken",
+    response.headers["authorization_refresh"]
+  );
+  return response;
+};
+
 // 소셜로그인
 export const kakaoLogin = async (code) => {
   const data = await axiosInstance.get(
@@ -115,4 +129,15 @@ export const updateComment = async (id, comment) => {
 export const deleteComment = async (id) => {
   const { data } = await axiosInstance.delete(`posts/comments/${id}`);
   return data;
+};
+
+// 유튜브 썸네일 불러오기
+export const getYouTubeThumbnail = async ({ videoId }) => {
+  const response = await axiosInstance.get(
+    `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${
+      import.meta.env.VITE_REACT_APP_YOUTUBE_API_URI
+    }&part=snippet`
+  );
+
+  return response.data.items[0].snippet.thumbnails.medium.url;
 };

@@ -8,6 +8,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import YoutubeVideo from "../components/postPage/YoutubeVideo";
 
 export default function PostPage() {
   const postId = useLocation().state;
@@ -63,7 +64,7 @@ export default function PostPage() {
       )}
 
       <>
-        <St.Video />
+        <YoutubeVideo youtubeUrl={data.url} />
 
         <St.Title>{data.title}</St.Title>
 

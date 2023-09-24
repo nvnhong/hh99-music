@@ -3,9 +3,13 @@ import styled from "styled-components";
 import * as St from "../styles/Styles";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { getUserName, loginUser } from "../api/api";
+import { useDispatch } from "react-redux";
+import { setUserId } from "../redux/slice/userSlice";
 
 export default function JoinPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [idInput, idHandleChange] = useInput("");
   const [pwInput, pwHandleChange] = useInput("");
@@ -16,6 +20,7 @@ export default function JoinPage() {
   const handleLogoClick = () => {
     navigate("/main");
   };
+
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
@@ -35,6 +40,9 @@ export default function JoinPage() {
 
       console.log("새로운 회원가입이 발생하였습니다 ->", response);
       if (response.status === 200) {
+        await loginUser(idInput, pwInput);
+        const userId = await getUserName(localStorage.getItem("accessToken"));
+        dispatch(setUserId(userId));
         navigate("/main");
       }
     } catch (error) {
