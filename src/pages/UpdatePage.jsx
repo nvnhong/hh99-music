@@ -1,11 +1,10 @@
-import styled from "styled-components";
 import Header from "../components/common/Header";
-import * as St from "../styles/Styles";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { axiosInstance } from "../api/axiosInstance";
 import { updatePost } from "../api/api";
+import { validateContent } from "../util/validation";
 
 export default function UpdatePage() {
   const [title, setTitle] = useState("");
@@ -45,60 +44,100 @@ export default function UpdatePage() {
     return <div>로딩중</div>;
   }
 
+  // 각 필드의 유효성 검사 함수
+  const validateTitleField = (title) => {
+    return !title ? "제목을 입력하세요." : "";
+  };
+
+  const validateUrlField = (url) => {
+    return !url.match(/^https:\/\/www\.youtube\.com/)
+      ? "유효한 유튜브 주소가 아닙니다."
+      : "";
+  };
+
+  const validateContentField = (content) => {
+    return validateContent(content);
+  };
+
+  // 오류 메시지를 저장할 상태 변수
+  const [validationErrors, setValidationErrors] = useState({
+    title: "",
+    url: "",
+    content: "",
+  });
+
   return (
-    <St.Container>
+    <div className="container mx-auto p-5">
       <Header />
-      <Col>
-        <span>제목</span>
-        <input
-          type="text"
-          defaultValue={data.title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </Col>
+      <div className="flex flex-col space-y-4 mx-auto max-w-md mt-5">
+        <div>
+          <span className="font-bold select-none">제목</span>
+          <input
+            className={`w-full h-10 bg-gray-100 rounded-md ${
+              validationErrors.title ? "border-red-500" : ""
+            }`}
+            type="text"
+            defaultValue={data.title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          {validationErrors.title && (
+            <p className="text-red-500 text-sm">{validationErrors.title}</p>
+          )}
+        </div>
 
-      <Col>
-        <span>유튜브 주소</span>
-        <input
-          type="text"
-          defaultValue={data.url}
-          onChange={(e) => setUrl(e.target.value)}
-        />
-      </Col>
+        <div>
+          <span className="font-bold select-none">유튜브 주소</span>
+          <input
+            className={`w-full h-10 bg-gray-100 rounded-md ${
+              validationErrors.url ? "border-red-500" : ""
+            }`}
+            type="text"
+            defaultValue={data.url}
+            onChange={(e) => setUrl(e.target.value)}
+          />
+          {validationErrors.url && (
+            <p className="text-red-500 text-sm">{validationErrors.url}</p>
+          )}
+        </div>
 
-      <Col>
-        <span>추천사유</span>
-        <input
-          type="text"
-          defaultValue={data.content}
-          onChange={(e) => setContent(e.target.value)}
-          placeholder="왜 이 노래를 추천하시나요?"
-        />
-      </Col>
+        <div>
+          <span className="font-bold select-none">추천사유</span>
+          <input
+            className={`w-full h-10 bg-gray-100 rounded-md ${
+              validationErrors.content ? "border-red-500" : ""
+            }`}
+            type="text"
+            defaultValue={data.content}
+            onChange={(e) => setContent(e.target.value)}
+            placeholder="왜 이 노래를 추천하시나요?"
+          />
+          {validationErrors.content && (
+            <p className="text-red-500 text-sm">{validationErrors.content}</p>
+          )}
+        </div>
 
-      <button
-        className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-auto my-2 select-none"
-        onClick={() => updatePostMutation.mutate()}
-      >
-        수정
-      </button>
-    </St.Container>
+        <button
+          className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-auto my-2 select-none flex"
+          onClick={() => {
+            // 각 필드의 유효성 검사를 통과하면 등록
+            const titleError = validateTitleField(title);
+            const urlError = validateUrlField(url);
+            const contentError = validateContentField(content);
+
+            setValidationErrors({
+              title: titleError,
+              url: urlError,
+              content: contentError,
+            });
+
+            if (!titleError && !urlError && !contentError) {
+              updatePostMutation.mutate();
+            }
+          }}
+        >
+          수정
+        </button>
+      </div>
+    </div>
   );
 }
-const Col = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 20px 30px;
-
-  span {
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-
-  input {
-    background-color: #eee;
-    height: 30px;
-    border: none;
-    border-radius: 4px;
-  }
-`;
