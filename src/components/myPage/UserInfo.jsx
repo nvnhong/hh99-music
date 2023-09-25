@@ -4,10 +4,16 @@ import Header from "../common/Header";
 import { BiArrowBack } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { closeModal, openModal } from "../../redux/slice/modalSlice";
+import UpdateUserModal from "./UpdateUserModal";
 
 export default function UserInfo() {
   const [email, setEmail] = useState("");
   const [bio, setBio] = useState("");
+  const { userId } = useSelector((state) => state.user);
+  const modal = useSelector((state) => state.modal);
+  const dispatch = useDispatch();
 
   const emailHandleChange = (e) => {
     setEmail(e.target.value);
@@ -21,10 +27,10 @@ export default function UserInfo() {
   useEffect(() => {
     async function fetchUserInfo() {
       try {
-        const response = await axios.get(
+        const { data } = await axios.get(
           `${
             import.meta.env.VITE_REACT_APP_URL
-          }users/profile?username=asdasdasd`,
+          }users/profile?username=${userId}`,
           {
             headers: {
               Authorization: localStorage.getItem("accessToken"),
@@ -33,7 +39,7 @@ export default function UserInfo() {
           }
         );
 
-        const userInfo = response.data;
+        const userInfo = data.data;
 
         setEmail(userInfo.email);
         setBio(userInfo.intro);
@@ -44,38 +50,6 @@ export default function UserInfo() {
 
     fetchUserInfo();
   }, []);
-
-  const onSaveHandler = async () => {
-    try {
-      const response = await axios.put(
-        `${import.meta.env.VITE_REACT_APP_URL}users/profile`,
-        {
-          username: "asdasdasd",
-          password: pw,
-          email: email,
-          intro: bio,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: localStorage.getItem("accessToken"),
-          },
-          withCredentials: true,
-        }
-      );
-
-      if (response.status === 200) {
-        alert("회원 정보가 성공적으로 업데이트되었습니다.");
-        navigate("/mypage");
-      }
-    } catch (error) {
-      if (error.response) {
-        alert(error.response.data.message);
-      } else {
-        alert("회원 정보 업데이트 중 오류가 발생했습니다.");
-      }
-    }
-  };
 
   return (
     <St.Container>
@@ -105,12 +79,21 @@ export default function UserInfo() {
           </St.Row>
           <button
             className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 select-none"
-            onClick={onSaveHandler}
+            onClick={() => dispatch(openModal("updateUserModal"))}
           >
             수정
           </button>
         </St.UserInfoForm>
       </St.UserInfoContainer>
+
+      {modal.updateUserModal && (
+        <UpdateUserModal
+          userId={userId}
+          email={email}
+          bio={bio}
+          handleClick={() => dispatch(closeModal("updateUserModal"))}
+        />
+      )}
     </St.Container>
   );
 }
