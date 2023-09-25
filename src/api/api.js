@@ -1,8 +1,13 @@
+import axios from "axios";
+import { extractVideoIdFromUrl } from "../util/youtube";
 import { axiosInstance } from "./axiosInstance";
 
 // 회원 탈퇴
-export const deleteUser = async (password) => {
-  const data = await axiosInstance.delete(`users/delete?password=${password}`);
+export const deleteUser = async (userId, password) => {
+  const data = await axiosInstance.delete(
+    `users/${userId}/delete?password=${password}`
+  );
+  console.log(data);
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
   return data;
@@ -49,6 +54,15 @@ export const getUserName = async (accessToken) => {
   });
 
   return data.username;
+};
+
+// user 정보 조회
+export const getUserInfo = async (username) => {
+  const { data } = await axiosInstance.get(
+    `users/profile?username=${username}`
+  );
+
+  return data.data;
 };
 
 // 게시글 조회
@@ -132,9 +146,13 @@ export const deleteComment = async (id) => {
 };
 
 // 유튜브 썸네일 불러오기
-export const getYouTubeThumbnail = async ({ videoId }) => {
-  const response = await axiosInstance.get(
-    `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${
+export const getYouTubeThumbnail = async (videoId) => {
+  const id = extractVideoIdFromUrl(videoId);
+
+  if (id === null) return "";
+
+  const response = await axios.get(
+    `https://www.googleapis.com/youtube/v3/videos?id=${id}&key=${
       import.meta.env.VITE_REACT_APP_YOUTUBE_API_URI
     }&part=snippet`
   );

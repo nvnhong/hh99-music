@@ -2,7 +2,6 @@ import * as St from "../styles/Styles";
 import Header from "../components/common/Header";
 import Card from "../components/mainPage/Card";
 import Modal from "../components/common/Modal";
-import Category from "../components/mainPage/Category";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal, closeModal } from "../redux/slice/modalSlice";
 import { getPost } from "../api/api";
@@ -29,6 +28,7 @@ export default function MainPage() {
       );
 
       const post = await getPost();
+
       return { data, post };
     }
   );
@@ -42,21 +42,21 @@ export default function MainPage() {
     <St.Container>
       <Header />
 
-      <St.CategoryGroup>
-        <Category />
+      <div className="flex justify-end mt-2 mb-2">
         <button
           className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 mt-2 select-none"
           onClick={() => dispatch(openModal("uploadModal"))}
         >
           글등록
         </button>
-      </St.CategoryGroup>
+      </div>
 
       <St.CardGroup>
         {data.data.content.map((value) => (
           <Card
             key={value.id}
             title={value.title}
+            videoUrl={value.url}
             handleClick={() => navigate("/post", { state: value.id })}
           />
         ))}

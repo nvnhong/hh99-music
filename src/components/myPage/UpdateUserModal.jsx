@@ -1,23 +1,40 @@
 import styled from "styled-components";
 import { CloseIcon } from "../../asset/icon/Icon";
-import { deleteUser, getUserInfo } from "../../api/api";
 import { useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { clearUserId } from "../../redux/slice/userSlice";
-import { useDispatch, useSelector } from "react-redux";
 
-export default function DeleteUserModal({ handleClick }) {
+export default function UpdateUserModal({ userId, email, bio, handleClick }) {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { userId } = useSelector((state) => state.user);
 
   const handleSubmitClick = async () => {
-    const { id } = await getUserInfo(userId);
-    await deleteUser(id, password);
-    dispatch(clearUserId());
-    handleClick();
-    navigate("/");
+    try {
+      const response = await axios.put(
+        `${import.meta.env.VITE_REACT_APP_URL}users/profile`,
+        {
+          username: userId,
+          password: password,
+          email: email,
+          intro: bio,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("accessToken"),
+          },
+          withCredentials: true,
+        }
+      );
+
+      if (response.status === 200) {
+        alert("회원 정보가 성공적으로 업데이트되었습니다.");
+        handleClick();
+        navigate("/mypage");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -32,7 +49,7 @@ export default function DeleteUserModal({ handleClick }) {
           </div>
 
           <div className="text-center mb-3 select-none">
-            회원탈퇴를 하시겠습니까? 비밀번호를 입력해주세요.
+            개인정보를 수정하기 위해 비밀번호를 입력해주세요.
           </div>
 
           <div className="mb-4">
@@ -49,7 +66,7 @@ export default function DeleteUserModal({ handleClick }) {
               className="w-16 h-8 bg-gradient-to-r from-red-400 via-red-500 to-red-600 text-white rounded-md text-sm font-medium hover:bg-gradient-to-br focus:ring-4 focus:ring-red-300 focus:outline-none select-none"
               onClick={handleSubmitClick}
             >
-              탈퇴
+              수정
             </button>
           </div>
         </div>
@@ -57,7 +74,6 @@ export default function DeleteUserModal({ handleClick }) {
     </>
   );
 }
-
 const Background = styled.div`
   position: fixed;
   width: 100vw;
