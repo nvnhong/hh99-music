@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setUserId } from "../redux/slice/userSlice";
 import { getUserName, kakaoLogin } from "../api/api";
+import axios from "axios"; // axios 모듈을 가져옵니다.
 
 export default function RedirectionPage() {
   const code = window.location.search.split("code=")[1];
