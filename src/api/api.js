@@ -29,6 +29,7 @@ export const loginUser = async (username, password) => {
 
 // 소셜로그인
 export const kakaoLogin = async (code) => {
+  console.log({ code });
   const data = await axiosInstance.get(
     `users/kakao/callback?code=${code}`,
     {
@@ -43,6 +44,8 @@ export const kakaoLogin = async (code) => {
       code,
     }
   );
+
+  console.log("카카오 로그인 api 동작 : ", data);
 
   return data;
 };
