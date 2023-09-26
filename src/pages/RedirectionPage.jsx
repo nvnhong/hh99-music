@@ -6,7 +6,7 @@ import { getUserName, kakaoLogin } from "../api/api";
 
 export default function RedirectionPage() {
   const code = window.location.search.split("code=")[1];
-  console.log(`Redirection ${code}`)
+  console.log(`Redirection ${code}`);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -14,7 +14,7 @@ export default function RedirectionPage() {
     const socialLogin = async () => {
       try {
         // 카카오 서버로부터 받은 인가 코드를 백엔드에게 전달하고 받은 데이터
-        const response = await kakaoLogin(code);
+        const response = await kakaoLogin(code, isCodeUsed);
         // 토큰을 accessToken 변수에 저장
         const accessToken = response.headers.authorization;
         // 토큰을 이용해 백엔드 서버로부터 user 정보 전달 받기
