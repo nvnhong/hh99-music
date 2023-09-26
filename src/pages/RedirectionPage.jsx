@@ -10,6 +10,24 @@ export default function RedirectionPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // 서버에서 중복 사용 여부를 확인하는 함수
+  const checkIfCodeUsed = async (code) => {
+    try {
+      // 서버에 요청을 보내서 해당 인가 코드가 이미 사용되었는지 확인
+      const response = await axios.post(
+        `${import.meta.env.VITE_REACT_APP_URL}checkCodeUsage`,
+        { code }
+      );
+
+      // 사용되었으면 true를 반환, 아니면 false 반환
+      return response.data.used;
+    } catch (error) {
+      console.error(error);
+      // 에러 처리: 중복 사용 여부를 알 수 없는 경우에 대한 예외처리
+      return false;
+    }
+  };
+
   useEffect(() => {
     const socialLogin = async () => {
       try {
@@ -46,24 +64,6 @@ export default function RedirectionPage() {
 
     socialLogin();
   }, []);
-
-  // 서버에서 중복 사용 여부를 확인하는 함수
-  const checkIfCodeUsed = async (code) => {
-    try {
-      // 서버에 요청을 보내서 해당 인가 코드가 이미 사용되었는지 확인
-      const response = await axios.post(
-        `${import.meta.env.VITE_REACT_APP_URL}checkCodeUsage`,
-        { code }
-      );
-
-      // 사용되었으면 true를 반환, 아니면 false 반환
-      return response.data.used;
-    } catch (error) {
-      console.error(error);
-      // 에러 처리: 중복 사용 여부를 알 수 없는 경우에 대한 예외처리
-      return false;
-    }
-  };
 
   return <div>로그인 중입니다.</div>;
 }
