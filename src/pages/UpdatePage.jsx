@@ -14,6 +14,13 @@ export default function UpdatePage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
+  // 오류 메시지를 저장할 상태 변수
+  const [validationErrors, setValidationErrors] = useState({
+    title: "",
+    url: "",
+    content: "",
+  });
+
   const { isLoading, error, data } = useQuery("onePost", async () => {
     const { data } = await axiosInstance.get(`posts/${postId}`, {
       headers: { Authorization: localStorage.getItem("accessToken") },
@@ -58,13 +65,6 @@ export default function UpdatePage() {
   const validateContentField = (content) => {
     return validateContent(content);
   };
-
-  // 오류 메시지를 저장할 상태 변수
-  const [validationErrors, setValidationErrors] = useState({
-    title: "",
-    url: "",
-    content: "",
-  });
 
   return (
     <div className="container mx-auto p-5">
