@@ -68,10 +68,8 @@ export default function LoginPage() {
     const REST_API_KEY = import.meta.env.VITE_REACT_APP_KAKAO_CLIENT_ID;
     const REDIRECT_URI = import.meta.env.VITE_REACT_APP_KAKAO_REDIRECT_URI;
     const link = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-    const code = new URL(link).searchParams.get("code");
-    console.log({ code });
-    // console.log("카카오 로그인 버튼 클릭");
-    // window.location.href = link;
+    console.log("카카오 로그인 버튼 클릭");
+    window.location.href = link;
   };
 
   return (
