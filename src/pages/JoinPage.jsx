@@ -30,6 +30,7 @@ export default function JoinPage() {
 
   const handleLogoClick = () => {
     // 로고 클릭 시 동작 정의
+    navigate("/main");
   };
 
   const onSubmitHandler = async (e) => {
@@ -98,7 +99,7 @@ export default function JoinPage() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen mb-15">
       <div
-        className="font-양진체 text-2xl mb-3 font-bold select-none text-red-400"
+        className="font-양진체 text-2xl mb-3 font-bold select-none text-red-400 cursor-pointer"
         onClick={handleLogoClick}
       >
         항해 뮤직 🎧
