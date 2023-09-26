@@ -31,7 +31,7 @@ export const loginUser = async (username, password) => {
 export const kakaoLogin = async (code) => {
   console.log({ code });
   const data = await axiosInstance.get(
-    `users/kakao/callback?code=${code}`,
+    `user/kakao/callback?code=${code}`,
     {
       headers: {
         "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
