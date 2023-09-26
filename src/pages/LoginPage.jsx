@@ -79,7 +79,7 @@ export default function LoginPage() {
           className="font-양진체 font-bold text-2xl mb-3 text-red-400 select-none cursor-pointer"
           onClick={handleLogoClick}
         >
-          항해 뮤직 🎧
+          항해 뮤직 🎧 이게 아니게
         </div>
         <div className="mb-4">
           <label className="text-m font-bold mb-2">아이디</label>
