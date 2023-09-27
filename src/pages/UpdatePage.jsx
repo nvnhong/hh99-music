@@ -1,7 +1,7 @@
 import Header from "../components/common/Header";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useMutation, useQuery } from "react-query";
+import { QueryClient, useMutation, useQuery } from "react-query";
 import { axiosInstance } from "../api/axiosInstance";
 import { updatePost } from "../api/api";
 import { validateContent } from "../util/validation";
@@ -12,6 +12,7 @@ export default function UpdatePage() {
   const [url, setUrl] = useState("");
   const postId = useLocation().state;
   const navigate = useNavigate();
+  const queryClient = new QueryClient();
 
   // 오류 메시지를 저장할 상태 변수
   const [validationErrors, setValidationErrors] = useState({
@@ -20,7 +21,7 @@ export default function UpdatePage() {
     content: "",
   });
 
-  const { isLoading, error, data, refetch } = useQuery("onePost", async () => {
+  const { isLoading, error, data } = useQuery("onePost", async () => {
     const { data } = await axiosInstance.get(`posts/${postId}`, {
       headers: { Authorization: localStorage.getItem("accessToken") },
     });
@@ -32,8 +33,9 @@ export default function UpdatePage() {
     () => updatePost(postId, { title, content, url }),
     {
       onSuccess: () => {
-        refetch();
+        queryClient.invalidateQueries("post");
         navigate("/main");
+        window.location.reload("/main");
       },
     }
   );
