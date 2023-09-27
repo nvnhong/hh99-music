@@ -79,7 +79,6 @@ export default function JoinPage() {
         }
       );
 
-      console.log("새로운 회원가입이 발생하였습니다 ->", response);
       if (response.status === 200) {
         await loginUser(idInput, pwInput);
         const userId = await getUserName(localStorage.getItem("accessToken"));

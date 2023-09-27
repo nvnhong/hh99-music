@@ -7,7 +7,6 @@ export const deleteUser = async (userId, password) => {
   const data = await axiosInstance.delete(
     `users/${userId}/delete?password=${password}`
   );
-  console.log(data);
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
   return data;
@@ -29,7 +28,6 @@ export const loginUser = async (username, password) => {
 
 // 소셜로그인
 export const kakaoLogin = async (code) => {
-  console.log("code : ", code);
   const data = await axiosInstance.get(
     `users/kakao/callback?code=${code}`,
     {
@@ -44,8 +42,6 @@ export const kakaoLogin = async (code) => {
       code,
     }
   );
-
-  console.log("카카오 로그인 api 동작 : ", data);
 
   return data;
 };
