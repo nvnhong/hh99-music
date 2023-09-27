@@ -2,38 +2,29 @@ import * as St from "../../styles/Styles";
 import { UpdateIcon, DeleteIcon } from "../../asset/icon/Icon";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { QueryClient, useMutation } from "react-query";
-import { deletePost } from "../../api/api";
 
-export default function List({ id, title, handleClick }) {
+export default function List({ id, title, handleClick, deletePostMutation }) {
   const navigate = useNavigate();
-  const queryClient = new QueryClient();
-
-  const deletePostMutation = useMutation(() => deletePost(id), {
-    onSuccess: () => {
-      queryClient.invalidateQueries("post");
-      window.location.replace("/mypage/userpost");
-    },
-  });
 
   return (
     <St.UserPostForm>
       <div className="flex-1" onClick={handleClick}>
         {title}
       </div>
-      <ButtonGroup>
-        <button onClick={() => navigate("/post/update", { state: id })}>
+      <div className="flex gap-3.5">
+        <button
+          className="p-1 rounded hover:bg-blue-100"
+          onClick={() => navigate("/post/update", { state: id })}
+        >
           <UpdateIcon />
         </button>
-        <button onClick={() => deletePostMutation.mutate()}>
+        <button
+          className="p-1 rounded hover:bg-blue-100"
+          onClick={() => deletePostMutation.mutate(id)}
+        >
           <DeleteIcon />
         </button>
-      </ButtonGroup>
+      </div>
     </St.UserPostForm>
   );
 }
-
-const ButtonGroup = styled.div`
-  display: flex;
-  gap: 10px;
-`;
