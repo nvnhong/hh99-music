@@ -2,28 +2,28 @@ import { useNavigate } from "react-router-dom";
 import * as St from "../../styles/Styles";
 import Header from "../common/Header";
 import List from "./List";
-import { QueryClient, useMutation, useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { deletePost, getMyPost } from "../../api/api";
 import { useSelector } from "react-redux";
-import { useState } from "react";
 
 export default function UserPost() {
   const navigate = useNavigate();
-  const queryClient = new QueryClient();
   const { userId } = useSelector((state) => state.user);
-  const { isLoading, error, data } = useQuery("myPost", () =>
+  const { isLoading, error, data, refetch } = useQuery("post", () =>
     getMyPost(userId)
   );
 
   const deletePostMutation = useMutation((id) => deletePost(id), {
     onSuccess: () => {
-      queryClient.invalidateQueries("myPost");
+      refetch();
     },
   });
 
   if (isLoading) {
     return <div>로딩중</div>;
   }
+
+  console.log(data);
 
   return (
     <St.Container>
