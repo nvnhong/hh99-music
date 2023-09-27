@@ -6,7 +6,6 @@ import { getUserName, kakaoLogin } from "../api/api";
 
 export default function RedirectionPage() {
   const code = window.location.search.split("code=")[1];
-  console.log(`Redirection ${code}`);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
