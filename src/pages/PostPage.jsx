@@ -1,9 +1,8 @@
-import * as St from "../styles/Styles";
 import Header from "../components/common/Header";
 import Comment from "../components/mainPage/Comment";
 import { LikeIcon } from "../asset/icon/Icon";
-import { likeComment, createComment, getOnePost, deletePost } from "../api/api";
-import { useLocation, useNavigate } from "react-router-dom";
+import { likeComment, createComment, getOnePost } from "../api/api";
+import { useLocation } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -12,10 +11,9 @@ import { validateContents } from "../util/validation";
 
 export default function PostPage() {
   const postId = useLocation().state;
-  const { userId } = useSelector((state) => state.user); // username
+  const { userId } = useSelector((state) => state.user);
   const [content, setContent] = useState("");
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
   const [contentError, setContentError] = useState("");
 
   // 게시글 단일 조회
@@ -71,13 +69,14 @@ export default function PostPage() {
         <div className="flex justify-between items-center mt-4">
           <div className="font-semibold text-gray-700 flex items-center gap-2">
             <span className="text-lg font-bold select-none">{data.author}</span>
-            <div
-              className="flex items-center gap-4"
-              onClick={() => likeMutation.mutate()}
-            >
-              &nbsp;
-              <LikeIcon className="select-none" />
-              <span className="mr-3 select-none">{data.likesCount}</span>
+            <div className="flex items-center gap-1 ml-10">
+              <span
+                className="p-2 cursor-pointer"
+                onClick={() => likeMutation.mutate()}
+              >
+                <LikeIcon className="select-none" />
+              </span>
+              <span className="select-none">{data.likesCount}</span>
             </div>
           </div>
         </div>
