@@ -23,8 +23,6 @@ export default function UserPost() {
     return <div>로딩중</div>;
   }
 
-  console.log(data);
-
   return (
     <St.Container>
       <Header />
