@@ -12,6 +12,7 @@ export default function List({ id, title, handleClick }) {
   const deletePostMutation = useMutation(() => deletePost(id), {
     onSuccess: () => {
       queryClient.invalidateQueries("post");
+      window.location.replace("/mypage/userpost");
     },
   });
 
