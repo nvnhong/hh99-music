@@ -118,6 +118,7 @@ export default function JoinPage() {
             } focus:outline-none focus:border-red-500`}
             type="text"
             value={idInput}
+            placeholder="영어와 숫자 포함 4-10자 이내"
             onChange={idHandleChange}
           />
           {errorMsg.username && (
@@ -139,6 +140,7 @@ export default function JoinPage() {
             type="password"
             value={pwInput}
             onChange={pwHandleChange}
+            placeholder="알파벳, 숫자, 특수문자를 포함한 8-15자 이내"
           />
           {errorMsg.password && (
             <div className="text-xs text-red-500 mt-2">{errorMsg.password}</div>
@@ -159,6 +161,7 @@ export default function JoinPage() {
             type="password"
             value={confirmPwInput}
             onChange={confirmPwHandleChange}
+            placeholder="비밀번호를 한 번 더 입력하세요"
           />
           {errorMsg.confirmPassword && (
             <div className="text-xs text-red-500 mt-2">
@@ -180,6 +183,7 @@ export default function JoinPage() {
             } focus:outline-none focus:border-red-500`}
             value={emailInput}
             onChange={emailHandleChange}
+            placeholder="example@gmail.com"
           />
           {errorMsg.email && (
             <div className="text-xs text-red-500 mt-2">{errorMsg.email}</div>
@@ -199,6 +203,7 @@ export default function JoinPage() {
             } focus:outline-none focus:border-red-500`}
             value={bioInput}
             onChange={bioHandleChange}
+            placeholder="나를 소개해주세요"
           />
           {errorMsg.bio && (
             <div className="text-xs text-red-500 mt-2">{errorMsg.bio}</div>
