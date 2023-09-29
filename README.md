@@ -2,6 +2,7 @@
 https://hh99-music-test.vercel.app/  
 항해 뮤직은 내가 좋아하는 음악을 공유하는 서비스입니다.  
 항해99에 참여중인 수강생(프론트엔드 2명, 백엔드 2명)이 팀을 이뤄 제작했습니다.  
+* 백엔드 팀 깃허브 주소 : https://github.com/CHANYOUNGKANG/First_Project
   
 ## 프로젝트 기간
 2023년 9월 15일 ~ 27일
