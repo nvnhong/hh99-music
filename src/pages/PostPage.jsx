@@ -84,11 +84,13 @@ export default function PostPage() {
         <p className="text-gray-600 mt-4 select-none">{data.content}</p>
 
         <div className="rounded-md mt-6 flex flex-col md:flex-row items-center">
-          <textarea
+          <div
             className="w-full md:w-94 px-4 py-1 rounded-md border border-gray-300 focus:outline-none focus:border-red-500"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
+            contenteditable="true"
+            onBlur={(e) => setContent(e.target.textContent)}
+          >
+            {content}
+          </div>
           <button
             className="bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-300 focus:outline-none text-white text-sm rounded-lg py-1 px-4 mt-2 md:mt-0 md:ml-2 whitespace-nowrap select-none"
             onClick={handleCommentCreate}
@@ -104,7 +106,7 @@ export default function PostPage() {
           <h2 className="text-xl font-semibold text-gray-800 select-none">
             댓글
           </h2>
-          <div className="mt-4 select-none">
+          <div className="mt-4 select-none flex flex-col gap-y-5">
             {data.commentList.length > 0 &&
               data.commentList.map((value) => (
                 <Comment

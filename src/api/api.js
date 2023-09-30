@@ -3,10 +3,8 @@ import { extractVideoIdFromUrl } from "../util/youtube";
 import { axiosInstance } from "./axiosInstance";
 
 // 회원 탈퇴
-export const deleteUser = async (userId, password) => {
-  const data = await axiosInstance.delete(
-    `users/${userId}/delete?password=${password}`
-  );
+export const deleteUser = async (userId) => {
+  const data = await axiosInstance.delete(`users/${userId}/delete`);
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
   return data;
