@@ -40,7 +40,7 @@ export default function Comment({
   };
 
   return (
-    <Container>
+    <div className="w-full">
       <UserInfoContainer>
         <UserInfo>
           <Username>{username}</Username>
@@ -62,11 +62,13 @@ export default function Comment({
       {/* 삼항연산자 */}
       {isUpdate ? (
         <>
-          <textarea
-            className="w-full"
-            defaultValue={content}
-            onChange={(e) => setUpdateContent(e.target.value)}
-          />
+          <div
+            className="w-full md:w-94 px-4 py-1 rounded-md border border-gray-300 focus:outline-none focus:border-red-500"
+            contenteditable="true"
+            onBlur={(e) => setUpdateContent(e.target.textContent)}
+          >
+            {content}
+          </div>
           <button
             className="bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-300 focus:outline-none text-white text-sm rounded-lg py-1 px-4 mt-2 md:mt-0 md:ml-2 whitespace-nowrap select-none"
             onClick={() => updateCommentMutate.mutate()}
@@ -77,7 +79,7 @@ export default function Comment({
       ) : (
         <div>{content}</div>
       )}
-    </Container>
+    </div>
   );
 }
 
