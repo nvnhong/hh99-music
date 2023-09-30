@@ -4,16 +4,16 @@ import Header from "../common/Header";
 import { BiArrowBack } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { closeModal, openModal } from "../../redux/slice/modalSlice";
+import { useSelector } from "react-redux";
 import UpdateUserModal from "./UpdateUserModal";
+import useModal from "../../hooks/useModal";
 
 export default function UserInfo() {
   const [email, setEmail] = useState("");
   const [bio, setBio] = useState("");
   const { userId } = useSelector((state) => state.user);
   const modal = useSelector((state) => state.modal);
-  const dispatch = useDispatch();
+  const { handleOpenModal, handleCloseModal } = useModal();
 
   const emailHandleChange = (e) => {
     setEmail(e.target.value);
@@ -79,7 +79,7 @@ export default function UserInfo() {
           </St.Row>
           <button
             className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 select-none"
-            onClick={() => dispatch(openModal("updateUserModal"))}
+            onClick={() => handleOpenModal("updateUserModal")}
           >
             수정
           </button>
@@ -91,7 +91,7 @@ export default function UserInfo() {
           userId={userId}
           email={email}
           bio={bio}
-          handleClick={() => dispatch(closeModal("updateUserModal"))}
+          handleClick={() => handleCloseModal("updateUserModal")}
         />
       )}
     </St.Container>

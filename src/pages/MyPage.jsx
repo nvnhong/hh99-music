@@ -1,15 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import Header from "../components/common/Header";
 import * as St from "../styles/Styles";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { clearUserId } from "../redux/slice/userSlice";
-import { closeModal, openModal } from "../redux/slice/modalSlice";
 import DeleteUserModal from "../components/myPage/DeleteUserModal";
+import useModal from "../hooks/useModal";
 
 export default function MyPage() {
   const modal = useSelector((state) => state.modal);
+  const { handleOpenModal, handleCloseModal } = useModal();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const handleLogout = () => {
     // 로컬 스토리지에서 토큰 제거
     localStorage.removeItem("accessToken");
@@ -36,14 +36,14 @@ export default function MyPage() {
 
         <St.List onClick={() => handleLogout()}>로그아웃</St.List>
 
-        <St.List onClick={() => dispatch(openModal("deleteUserModal"))}>
+        <St.List onClick={() => handleOpenModal("deleteUserModal")}>
           회원탈퇴
         </St.List>
       </St.ListGroup>
 
       {modal.deleteUserModal && (
         <DeleteUserModal
-          handleClick={() => dispatch(closeModal("deleteUserModal"))}
+          handleClick={() => handleCloseModal("deleteUserModal")}
         />
       )}
     </St.Container>

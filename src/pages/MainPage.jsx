@@ -2,18 +2,18 @@ import * as St from "../styles/Styles";
 import Header from "../components/common/Header";
 import Card from "../components/mainPage/Card";
 import Modal from "../components/common/Modal";
-import { useDispatch, useSelector } from "react-redux";
-import { openModal, closeModal } from "../redux/slice/modalSlice";
+import { useSelector } from "react-redux";
 import { getPost } from "../api/api";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Pagination from "../components/mainPage/Pagination";
 import { axiosInstance } from "../api/axiosInstance";
+import useModal from "../hooks/useModal";
 
 export default function MainPage() {
   const modal = useSelector((state) => state.modal);
-  const dispatch = useDispatch();
+  const { handleOpenModal, handleCloseModal } = useModal();
   const navigate = useNavigate();
 
   // >> [페이지네이션] >>
@@ -45,7 +45,7 @@ export default function MainPage() {
       <div className="flex justify-end mt-2 mb-2">
         <button
           className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 mt-2 select-none"
-          onClick={() => dispatch(openModal("uploadModal"))}
+          onClick={() => handleOpenModal("uploadModal")}
         >
           글등록
         </button>
@@ -70,7 +70,7 @@ export default function MainPage() {
       />
 
       {modal.uploadModal && (
-        <Modal handleClick={() => dispatch(closeModal("uploadModal"))} />
+        <Modal handleClick={() => handleCloseModal("uploadModal")} />
       )}
     </St.Container>
   );
