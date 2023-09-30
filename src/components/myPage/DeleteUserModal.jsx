@@ -22,7 +22,7 @@ export default function DeleteUserModal({ handleClick }) {
 
     try {
       const { id } = await getUserInfo(userId);
-      await deleteUser(id, password);
+      await deleteUser(id);
       dispatch(clearUserId());
       handleClick();
       navigate("/");
