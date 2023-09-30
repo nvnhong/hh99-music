@@ -6,10 +6,14 @@ export default function Pagination({
   currentPage,
   paginate,
 }) {
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
-    pageNumbers.push(i);
-  }
+  const generatePageNumbers = (totalPosts, postsPerPage) => {
+    return Array.from(
+      { length: Math.ceil(totalPosts / postsPerPage) },
+      (_, index) => index + 1
+    );
+  };
+
+  const pageNumbers = generatePageNumbers(totalPosts, postsPerPage);
 
   // 현재 페이지에서 보여줄 페이지 번호 범위를 계산
   const maxPageButtons = 5; // 한 번에 보여줄 페이지 버튼의 최대 개수
