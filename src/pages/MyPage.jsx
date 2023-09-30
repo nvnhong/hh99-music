@@ -1,13 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import Header from "../components/common/Header";
 import * as St from "../styles/Styles";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { clearUserId } from "../redux/slice/userSlice";
 import DeleteUserModal from "../components/myPage/DeleteUserModal";
 import useModal from "../hooks/useModal";
 
 export default function MyPage() {
   const modal = useSelector((state) => state.modal);
+  const dispatch = useDispatch();
   const { handleOpenModal, handleCloseModal } = useModal();
   const navigate = useNavigate();
   const handleLogout = () => {

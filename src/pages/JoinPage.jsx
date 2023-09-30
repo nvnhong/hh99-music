@@ -26,6 +26,7 @@ export default function JoinPage() {
     confirmPassword: null,
     email: null,
     bio: null,
+    server: null,
   });
 
   const handleLogoClick = () => {
@@ -87,7 +88,13 @@ export default function JoinPage() {
         // 회원가입 성공 시 처리
       }
     } catch (error) {
-      console.error(error);
+      // 서버에서 에러 응답을 받은 경우
+      if (error.response && error.response.data) {
+        const serverError = error.response.data.message;
+        setErrorMsg({ ...errorMsg, server: serverError });
+      } else {
+        console.error(error);
+      }
     }
   };
 
@@ -123,6 +130,9 @@ export default function JoinPage() {
           />
           {errorMsg.username && (
             <div className="text-xs text-red-500 mt-2">{errorMsg.username}</div>
+          )}
+          {errorMsg.server && (
+            <div className="text-xs text-red-500 mt-2">{errorMsg.server}</div>
           )}
         </div>
         <div className="mb-4">

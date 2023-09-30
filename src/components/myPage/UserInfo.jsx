@@ -56,8 +56,8 @@ export default function UserInfo() {
       <Header />
 
       <St.UserInfoContainer>
-        <St.List onClick={() => navigate("/mypage")}>
-          <BiArrowBack /> &nbsp; 개인정보 수정
+        <St.List onClick={() => navigate("/mypage")} className="select-none">
+          <BiArrowBack className="select-none" /> &nbsp; 개인정보 수정
         </St.List>
         <St.UserInfoForm>
           <St.Row>

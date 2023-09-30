@@ -3,12 +3,20 @@ import { CloseIcon } from "../../asset/icon/Icon";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { validatePassword } from "../../util/validation";
 
 export default function UpdateUserModal({ userId, email, bio, handleClick }) {
   const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmitClick = async () => {
+    const passwordValidation = validatePassword(password); // 비밀번호 유효성 검사
+    if (passwordValidation) {
+      // 검증 실패
+      setPasswordError("비밀번호를 다시 확인해주세요.");
+      return;
+    }
     try {
       const response = await axios.put(
         `${import.meta.env.VITE_REACT_APP_URL}users/profile`,
@@ -55,10 +63,18 @@ export default function UpdateUserModal({ userId, email, bio, handleClick }) {
           <div className="mb-4">
             <input
               type="password"
-              className="w-full h-10 px-3 rounded-md border border-gray-300 focus:outline-none"
+              className={`w-full h-10 px-3 rounded-md border ${
+                passwordError ? "border-red-500" : "border-gray-300"
+              } focus:outline-none`}
               placeholder="비밀번호"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setPasswordError(""); // 인풋 필드 값이 변경되면 에러 메시지 초기화
+              }}
             />
+            {passwordError && (
+              <div className="text-xs text-red-500 mt-2">{passwordError}</div>
+            )}
           </div>
 
           <div className="flex justify-center">

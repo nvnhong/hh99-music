@@ -5,6 +5,8 @@ import List from "./List";
 import { useMutation, useQuery } from "react-query";
 import { deletePost, getMyPost } from "../../api/api";
 import { useSelector } from "react-redux";
+import { BiArrowBack } from "react-icons/bi";
+import styled from "styled-components";
 
 export default function UserPost() {
   const navigate = useNavigate();
@@ -28,8 +30,8 @@ export default function UserPost() {
       <Header />
 
       <St.UserPostContainer>
-        <St.List onClick={() => navigate("/mypage")}>
-          내가 작성한 게시글 목록
+        <St.List onClick={() => navigate("/mypage")} className="select-none">
+          <BiArrowBack className="select-none" /> &nbsp;내가 작성한 게시글 목록
         </St.List>
         {data.length > 0 ? (
           data.map((value) => (
@@ -42,7 +44,9 @@ export default function UserPost() {
             />
           ))
         ) : (
-          <St.UserPostForm>작성된 글이 없습니다.</St.UserPostForm>
+          <div className="p-2 flex justify-center select-none text-red-400">
+            작성된 글이 없습니다.
+          </div>
         )}
       </St.UserPostContainer>
     </St.Container>
